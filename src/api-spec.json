@@ -1,7 +1,7 @@
 {
     "openapi": "3.1.0",
     "info": {
-        "title": "Household Account Service",
+        "title": "Household Accounts Core Service",
         "version": "0.0.1",
         "description": "",        
         "contact": {
@@ -13,10 +13,6 @@
         {
             "url": "http://localhost:3001",
             "description": "local url"
-        },
-        {
-            "url": "https://household-account-service.azurewebsites.net/",
-            "description": "Development env"
         }
     ]
 }

@@ -1,6 +1,6 @@
 {
-  "name": "household-account-service",
-  "version": "1.0.0",
+  "name": "household-accounts-core-service",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
