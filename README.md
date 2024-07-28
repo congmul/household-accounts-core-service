@@ -1,1 +1,1 @@
-# Household Accounts service
+# Household Accounts Core service
