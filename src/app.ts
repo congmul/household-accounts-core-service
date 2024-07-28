@@ -11,6 +11,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+dbLoader();
+
 app.use("/", swaggerRoute);
 
 app.get("/health", (req: Request, res: Response) => {
