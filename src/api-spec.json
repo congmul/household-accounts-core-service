@@ -15,7 +15,7 @@
             "description": "local url"
         },
         {
-            "url": "",
+            "url": "https://household-account-service.azurewebsites.net/",
             "description": "Development env"
         }
     ]
