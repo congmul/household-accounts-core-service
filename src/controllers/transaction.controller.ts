@@ -35,7 +35,7 @@ export const getTransactions = async (req: Request, res: Response) => {
       );
     }
 
-    res.status(201).send(result);
+    res.status(200).send(result);
   } catch (err: any) {
     res.status(500).send(ErrorMsg.exceptionError);
   }
