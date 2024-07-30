@@ -49,3 +49,8 @@ export const validPatchTransaction = {
     paymentMethod: Joi.string().valid("Credit Card", "Cash"),
   }),
 };
+export const validDeleteTransaction = {
+  params: Joi.object().keys({
+    transactionId: Joi.string().custom(validObjectId).required(),
+  }),
+};

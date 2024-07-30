@@ -62,3 +62,20 @@ export const patchTransaction = async (req: Request, res: Response) => {
     res.status(500).send(ErrorMsg.exceptionError);
   }
 };
+export const deleteTransaction = async (req: Request, res: Response) => {
+  try {
+    const { transactionId } = req.params;
+    // Check if the transaction exists
+    const transaction = await transactionService.getTransaction(transactionId);
+    if (!transaction) {
+      return res
+        .status(404)
+        .send({ ...TransactionMsg.notFound, transactionId });
+    }
+    await transactionService.deleteTransaction(transactionId);
+    res.status(200).send(TransactionMsg.delete);
+  } catch (err) {
+    logger.error(err);
+    res.status(500).send(ErrorMsg.exceptionError);
+  }
+};

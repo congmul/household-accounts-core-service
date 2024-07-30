@@ -96,4 +96,15 @@ export const transactionService = {
       throw new Error(TransactionMsg.updateDbError.message);
     }
   },
+  deleteTransaction: async (transactionId: string) => {
+    try {
+      const result = await Transaction.findByIdAndDelete({
+        _id: transactionId,
+      });
+      return result;
+    } catch (err) {
+      logger.error(err);
+      throw new Error(TransactionMsg.deleteDbError.message);
+    }
+  },
 };

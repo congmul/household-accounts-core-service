@@ -3,4 +3,5 @@ export {
   validTransaction,
   validGetTransaction,
   validPatchTransaction,
+  validDeleteTransaction,
 } from "./transaction.validation";
