@@ -18,7 +18,7 @@ app.use("/transaction", transactionRoute);
 
 app.get("/health", (req: Request, res: Response) => {
   res.send({
-    msg: "Household Account Service is healthy and ready to handle your requests.",
+    msg: "Household Accounts Core Service is healthy and ready to handle your requests.",
   });
 });
 
