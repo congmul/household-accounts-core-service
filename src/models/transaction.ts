@@ -46,7 +46,7 @@ const transactionSchema = new Schema<ITransaction>({
 });
 
 transactionSchema.pre("findOneAndUpdate", function () {
-  this.set({ updatedAt: Date.now });
+  this.set({ updatedAt: Date.now() });
 });
 
 const Transaction = model("Transaction", transactionSchema);
