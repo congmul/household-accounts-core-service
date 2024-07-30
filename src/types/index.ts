@@ -1,3 +1,5 @@
-import { ITransaction, ITransactionType } from "./transaction";
-
-export { ITransaction, ITransactionType };
+export {
+  ITransaction,
+  ITransactionType,
+  ITransactionCreatePayload,
+} from "./transaction";

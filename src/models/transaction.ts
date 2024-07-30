@@ -45,7 +45,9 @@ const transactionSchema = new Schema<ITransaction>({
   },
 });
 
-transactionSchema.index({ userId: 1, date: 1 }, { unique: true });
+transactionSchema.pre("findOneAndUpdate", function () {
+  this.set({ updatedAt: Date.now });
+});
 
 const Transaction = model("Transaction", transactionSchema);
 export default Transaction;

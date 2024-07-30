@@ -1,9 +1,10 @@
 import express from "express";
+import { validate, validTransaction, validGetTransaction } from "../validate";
+import { createTransaction, getTransactions } from "../controllers";
 
 const router = express.Router();
 
-router.post("/", (req, res) => {
-  res.status(200).send({ msg: "test route" });
-});
+router.post("/", validate(validTransaction), createTransaction);
+router.get("/:userId", validate(validGetTransaction), getTransactions);
 
 export default router;
