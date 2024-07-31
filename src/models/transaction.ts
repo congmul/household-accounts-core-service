@@ -26,6 +26,7 @@ const transactionSchema = new Schema<ITransaction>({
     type: Number,
     required: true,
   },
+  // TODO: need subCategory
   category: {
     type: String,
   },
