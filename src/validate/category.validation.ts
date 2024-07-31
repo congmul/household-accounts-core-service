@@ -12,8 +12,13 @@ export const validCategory = {
     color: Joi.string(),
   }),
 };
-export const validGetCategory = {
+export const validParamsUserId = {
   params: Joi.object().keys({
     userId: Joi.string().custom(validObjectId).required(),
+  }),
+};
+export const validParamsCategoryId = {
+  params: Joi.object().keys({
+    categoryId: Joi.string().custom(validObjectId).required(),
   }),
 };

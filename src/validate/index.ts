@@ -5,4 +5,8 @@ export {
   validPatchTransaction,
   validDeleteTransaction,
 } from "./transaction.validation";
-export { validCategory, validGetCategory } from "./category.validation";
+export {
+  validCategory,
+  validParamsUserId,
+  validParamsCategoryId,
+} from "./category.validation";

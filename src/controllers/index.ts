@@ -5,4 +5,8 @@ export {
   deleteTransaction,
 } from "./transaction.controller";
 
-export { createCategory, getCategories } from "./category.controller";
+export {
+  createCategory,
+  getCategories,
+  deleteCategory,
+} from "./category.controller";

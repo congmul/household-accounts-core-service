@@ -22,4 +22,22 @@ export const categoryService = {
       throw new Error(CategoryMgs.getDbError.message);
     }
   },
+  getCategory: async (categoryId: string) => {
+    try {
+      const result = await Category.findOne({ _id: categoryId });
+      return result;
+    } catch (err) {
+      logger.error(err);
+      throw new Error(CategoryMgs.getDbError.message);
+    }
+  },
+  deleteCategory: async (categoryId: string) => {
+    try {
+      const result = await Category.findByIdAndDelete({ _id: categoryId });
+      return result;
+    } catch (err) {
+      logger.error(err);
+      throw new Error(CategoryMgs.deleteDbError.message);
+    }
+  },
 };
