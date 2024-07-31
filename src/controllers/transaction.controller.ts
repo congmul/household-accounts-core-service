@@ -49,7 +49,9 @@ export const getTransactions = async (req: Request, res: Response) => {
     res.status(200).send(result);
   } catch (err: any) {
     logger.error(err);
-    res.status(500).send(ErrorMsg.exceptionError);
+    res
+      .status(err.statusCode)
+      .send({ message: err.message, statusCode: err.statusCode });
   }
 };
 export const patchTransaction = async (req: Request, res: Response) => {

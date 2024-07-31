@@ -2,6 +2,7 @@ import { Transaction } from "../models";
 import logger from "../utils/logger";
 import { TransactionMsg } from "../config/msgs";
 import { ITransactionCreatePayload, ITransactionUpdatePayload } from "../types";
+import AppError from "../utils/errorHandler";
 
 export const transactionService = {
   createTransaction: async (payload: ITransactionCreatePayload) => {
@@ -10,7 +11,7 @@ export const transactionService = {
       return result;
     } catch (err) {
       logger.error(err);
-      throw new Error(TransactionMsg.createDbError.message);
+      throw new AppError(TransactionMsg.createDbError.message, 500);
     }
   },
   getTransaction: async (transactionId: string) => {
@@ -19,7 +20,7 @@ export const transactionService = {
       return transaction;
     } catch (err: any) {
       logger.error(err);
-      throw new Error(TransactionMsg.getDbError.message);
+      throw new AppError(TransactionMsg.getDbError.message, 500);
     }
   },
   getExpenses: async (userId: string, year: number, month: number) => {
@@ -48,7 +49,7 @@ export const transactionService = {
       return result;
     } catch (err) {
       logger.error(err);
-      throw new Error(TransactionMsg.getDbError.message);
+      throw new AppError(TransactionMsg.getDbError.message, 500);
     }
   },
   getIncomes: async (userId: string, year: number, month: number) => {
@@ -77,7 +78,7 @@ export const transactionService = {
       return result;
     } catch (err) {
       logger.error(err);
-      throw new Error(TransactionMsg.getDbError.message);
+      throw new AppError(TransactionMsg.getDbError.message, 500);
     }
   },
 
@@ -93,7 +94,7 @@ export const transactionService = {
       return result;
     } catch (err) {
       logger.error(err);
-      throw new Error(TransactionMsg.updateDbError.message);
+      throw new AppError(TransactionMsg.updateDbError.message, 500);
     }
   },
   deleteTransaction: async (transactionId: string) => {
@@ -104,7 +105,7 @@ export const transactionService = {
       return result;
     } catch (err) {
       logger.error(err);
-      throw new Error(TransactionMsg.deleteDbError.message);
+      throw new AppError(TransactionMsg.deleteDbError.message, 500);
     }
   },
 };

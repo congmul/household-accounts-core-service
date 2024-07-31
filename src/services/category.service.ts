@@ -2,6 +2,7 @@ import { Category } from "../models";
 import logger from "../utils/logger";
 import { CategoryMgs } from "../config/msgs";
 import { ICategoryCreatePayload, ICategoryUpdatePayload } from "../types";
+import AppError from "../utils/errorHandler";
 
 export const categoryService = {
   createCategory: async (payload: ICategoryCreatePayload) => {
@@ -10,7 +11,7 @@ export const categoryService = {
       return result;
     } catch (err) {
       logger.error(err);
-      throw new Error(CategoryMgs.createDbError.message);
+      throw new AppError(CategoryMgs.createDbError.message, 500);
     }
   },
   getCategories: async (userId: string) => {
@@ -19,7 +20,7 @@ export const categoryService = {
       return result;
     } catch (err) {
       logger.error(err);
-      throw new Error(CategoryMgs.getDbError.message);
+      throw new AppError(CategoryMgs.getDbError.message, 500);
     }
   },
   getCategory: async (categoryId: string) => {
@@ -28,7 +29,7 @@ export const categoryService = {
       return result;
     } catch (err) {
       logger.error(err);
-      throw new Error(CategoryMgs.getDbError.message);
+      throw new AppError(CategoryMgs.getDbError.message, 500);
     }
   },
   updateCategory: async (
@@ -43,7 +44,7 @@ export const categoryService = {
       return result;
     } catch (err) {
       logger.error(err);
-      throw new Error(CategoryMgs.getDbError.message);
+      throw new AppError(CategoryMgs.getDbError.message, 500);
     }
   },
   deleteCategory: async (categoryId: string) => {
@@ -52,7 +53,7 @@ export const categoryService = {
       return result;
     } catch (err) {
       logger.error(err);
-      throw new Error(CategoryMgs.deleteDbError.message);
+      throw new AppError(CategoryMgs.getDbError.message, 500);
     }
   },
 };
