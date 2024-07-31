@@ -8,7 +8,7 @@ export const validTransaction = {
   body: Joi.object().keys({
     userId: Joi.string().custom(validObjectId).required(),
     date: Joi.date().format("YYYY-MM-DD").required(),
-    type: Joi.string().valid("income", "expense").default("expense"),
+    type: Joi.string().valid("income", "expense").required(),
     amount: Joi.number().required(),
     category: Joi.string(),
     note: Joi.string(),
