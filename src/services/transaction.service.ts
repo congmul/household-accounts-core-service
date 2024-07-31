@@ -1,7 +1,7 @@
 import { Transaction } from "../models";
 import logger from "../utils/logger";
 import { TransactionMsg } from "../config/msgs";
-import { ITransactionCreatePayload } from "../types";
+import { ITransactionCreatePayload, ITransactionUpdatePayload } from "../types";
 
 export const transactionService = {
   createTransaction: async (payload: ITransactionCreatePayload) => {
@@ -11,6 +11,15 @@ export const transactionService = {
     } catch (err) {
       logger.error(err);
       throw new Error(TransactionMsg.createDbError.message);
+    }
+  },
+  getTransaction: async (transactionId: string) => {
+    try {
+      const transaction = await Transaction.findOne({ _id: transactionId });
+      return transaction;
+    } catch (err: any) {
+      logger.error(err);
+      throw new Error(TransactionMsg.getDbError.message);
     }
   },
   getExpenses: async (userId: string, year: number, month: number) => {
@@ -69,6 +78,33 @@ export const transactionService = {
     } catch (err) {
       logger.error(err);
       throw new Error(TransactionMsg.getDbError.message);
+    }
+  },
+
+  updateTransaction: async (
+    transactionId: string,
+    payload: ITransactionUpdatePayload,
+  ) => {
+    try {
+      const result = await Transaction.findByIdAndUpdate(
+        { _id: transactionId },
+        { ...payload },
+      );
+      return result;
+    } catch (err) {
+      logger.error(err);
+      throw new Error(TransactionMsg.updateDbError.message);
+    }
+  },
+  deleteTransaction: async (transactionId: string) => {
+    try {
+      const result = await Transaction.findByIdAndDelete({
+        _id: transactionId,
+      });
+      return result;
+    } catch (err) {
+      logger.error(err);
+      throw new Error(TransactionMsg.deleteDbError.message);
     }
   },
 };

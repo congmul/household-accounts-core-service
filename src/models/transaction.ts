@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { ITransaction, ITransactionType } from "../types";
+import { ITransaction } from "../types";
 
 const transactionSchema = new Schema<ITransaction>({
   userId: {
@@ -46,7 +46,7 @@ const transactionSchema = new Schema<ITransaction>({
 });
 
 transactionSchema.pre("findOneAndUpdate", function () {
-  this.set({ updatedAt: Date.now });
+  this.set({ updatedAt: Date.now() });
 });
 
 const Transaction = model("Transaction", transactionSchema);

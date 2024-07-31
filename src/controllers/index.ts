@@ -1,1 +1,6 @@
-export { createTransaction, getTransactions } from "./transaction.controller";
+export {
+  createTransaction,
+  getTransactions,
+  patchTransaction,
+  deleteTransaction,
+} from "./transaction.controller";
