@@ -9,4 +9,5 @@ export {
   validCategory,
   validParamsUserId,
   validParamsCategoryId,
+  validUpdateCategory,
 } from "./category.validation";

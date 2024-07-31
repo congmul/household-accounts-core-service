@@ -22,3 +22,11 @@ export const validParamsCategoryId = {
     categoryId: Joi.string().custom(validObjectId).required(),
   }),
 };
+export const validUpdateCategory = {
+  ...validParamsCategoryId,
+  body: Joi.object().keys({
+    name: Joi.string(),
+    icon: Joi.string(),
+    color: Joi.string(),
+  }),
+};

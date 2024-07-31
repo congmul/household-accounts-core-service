@@ -13,3 +13,9 @@ export interface ICategoryCreatePayload {
   icon?: string;
   color?: string;
 }
+
+export interface ICategoryUpdatePayload {
+  name?: string;
+  icon?: string;
+  color?: string;
+}

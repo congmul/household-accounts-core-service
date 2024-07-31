@@ -8,5 +8,6 @@ export {
 export {
   createCategory,
   getCategories,
+  updateCategory,
   deleteCategory,
 } from "./category.controller";
