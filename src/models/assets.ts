@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
-import { IBudget } from "../types";
+import { IAssets } from "../types";
 
-const budgetSchema = new Schema<IBudget>({
+const assetsSchema = new Schema<IAssets>({
   userId: {
     type: String,
     required: true,
@@ -22,9 +22,8 @@ const budgetSchema = new Schema<IBudget>({
     type: Number,
     required: true,
   },
-  category: {
+  source: {
     type: String,
-    required: true,
   },
   createdAt: {
     type: Date,
@@ -36,9 +35,9 @@ const budgetSchema = new Schema<IBudget>({
   },
 });
 
-budgetSchema.pre("findOneAndUpdate", function () {
+assetsSchema.pre("findOneAndUpdate", function () {
   this.set({ updatedAt: Date.now() });
 });
 
-const Budget = model("Budget", budgetSchema);
-export default Budget;
+const Assets = model("Assets", assetsSchema);
+export default Assets;

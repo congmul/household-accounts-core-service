@@ -1,8 +1,8 @@
-export interface IBudget {
+export interface IAssets {
   userId: string;
   date: Date; // 2024-07-28T00:00:00
   amount: number;
-  category: string;
+  source: string;
   createdAt: Date;
   updatedAt: Date;
 }
