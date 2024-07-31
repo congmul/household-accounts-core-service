@@ -35,6 +35,10 @@ const transactionSchema = new Schema<ITransaction>({
   paymentMethod: {
     type: String,
   },
+  fixedExpense: {
+    type: String,
+    default: "none",
+  },
   createdAt: {
     type: Date,
     default: Date.now,

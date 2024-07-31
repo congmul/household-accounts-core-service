@@ -8,6 +8,7 @@ export interface ITransaction {
   note: string;
   type: ITransactionType;
   paymentMethod: string;
+  fixedExpense: string; // none, daily, weekly, monthly, annually
   createdAt: Date;
   updatedAt: Date;
 }
