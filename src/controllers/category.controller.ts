@@ -9,7 +9,9 @@ export const createCategory = async (req: Request, res: Response) => {
     // Check if the user exists
     const isUser = userService.checkExist(userId);
     if (!isUser) {
-      return res.status(404).send({ message: "User not found" });
+      return res
+        .status(404)
+        .send({ message: "User not found", statusCode: 404 });
     }
 
     await categoryService.createCategory(req.body);
@@ -17,7 +19,7 @@ export const createCategory = async (req: Request, res: Response) => {
     res.status(201).send(CategoryMgs.create);
   } catch (err: any) {
     logger.error(err);
-    res.status(500).send(ErrorMsg.exceptionError);
+    res.status(500).send(err);
   }
 };
 
@@ -27,14 +29,16 @@ export const getCategories = async (req: Request, res: Response) => {
     // Check if the user exists
     const isUser = await userService.checkExist(userId);
     if (!isUser) {
-      return res.status(404).send({ message: "User not found" });
+      return res
+        .status(404)
+        .send({ message: "User not found", statusCode: 404 });
     }
     const result = await categoryService.getCategories(userId);
 
     res.status(200).send(result);
   } catch (err: any) {
     logger.error(err);
-    res.status(500).send(ErrorMsg.exceptionError);
+    res.status(500).send(err);
   }
 };
 export const updateCategory = async (req: Request, res: Response) => {
@@ -47,9 +51,9 @@ export const updateCategory = async (req: Request, res: Response) => {
     }
     await categoryService.updateCategory(categoryId, req.body);
     res.status(200).send(CategoryMgs.patch);
-  } catch (err) {
+  } catch (err: any) {
     logger.error(err);
-    res.status(500).send(ErrorMsg.exceptionError);
+    res.status(500).send(err);
   }
 };
 
@@ -65,6 +69,6 @@ export const deleteCategory = async (req: Request, res: Response) => {
     res.status(200).send(CategoryMgs.delete);
   } catch (err) {
     logger.error(err);
-    res.status(500).send(ErrorMsg.exceptionError);
+    res.status(500).send(err);
   }
 };

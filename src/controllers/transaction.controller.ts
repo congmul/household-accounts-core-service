@@ -9,7 +9,9 @@ export const createTransaction = async (req: Request, res: Response) => {
     // Check if the user exists
     const isUser = userService.checkExist(userId);
     if (!isUser) {
-      return res.status(404).send({ message: "User not found" });
+      return res
+        .status(404)
+        .send({ message: "User not found", statusCode: 404 });
     }
 
     await transactionService.createTransaction(req.body);
@@ -17,7 +19,7 @@ export const createTransaction = async (req: Request, res: Response) => {
     res.status(201).send(TransactionMsg.create);
   } catch (err: any) {
     logger.error(err);
-    res.status(500).send(ErrorMsg.exceptionError);
+    res.status(500).send(err);
   }
 };
 export const getTransactions = async (req: Request, res: Response) => {
@@ -26,7 +28,9 @@ export const getTransactions = async (req: Request, res: Response) => {
     // Check if the user exists
     const isUser = await userService.checkExist(userId);
     if (!isUser) {
-      return res.status(404).send({ message: "User not found" });
+      return res
+        .status(404)
+        .send({ message: "User not found", statusCode: 404 });
     }
 
     const { type, year, month } = req.query;
@@ -70,7 +74,7 @@ export const patchTransaction = async (req: Request, res: Response) => {
     res.status(200).send(TransactionMsg.patch);
   } catch (err: any) {
     logger.error(err);
-    res.status(500).send(ErrorMsg.exceptionError);
+    res.status(500).send(err);
   }
 };
 export const deleteTransaction = async (req: Request, res: Response) => {
@@ -87,6 +91,6 @@ export const deleteTransaction = async (req: Request, res: Response) => {
     res.status(200).send(TransactionMsg.delete);
   } catch (err) {
     logger.error(err);
-    res.status(500).send(ErrorMsg.exceptionError);
+    res.status(500).send(err);
   }
 };
