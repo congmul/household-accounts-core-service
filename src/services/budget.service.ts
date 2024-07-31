@@ -42,4 +42,36 @@ export const budgetService = {
       throw new AppError(ErrorMsg.createDbError("budget").message, 500);
     }
   },
+  getBudget: async (budgetId: string) => {
+    try {
+      const budget = await Budget.findOne({ _id: budgetId });
+      return budget;
+    } catch (err: any) {
+      logger.error(err);
+      throw new AppError(ErrorMsg.getDbError("budget").message, 500);
+    }
+  },
+  updateBudget: async (budgetId: string, payload: IBudgetUpdatePayload) => {
+    try {
+      const result = await Budget.findByIdAndUpdate(
+        { _id: budgetId },
+        { ...payload },
+      );
+      return result;
+    } catch (err) {
+      logger.error(err);
+      throw new AppError(ErrorMsg.updateDbError("budget").message, 500);
+    }
+  },
+  deleteBudget: async (budgetId: string) => {
+    try {
+      const result = await Budget.findByIdAndDelete({
+        _id: budgetId,
+      });
+      return result;
+    } catch (err) {
+      logger.error(err);
+      throw new AppError(ErrorMsg.deleteDbError("budget").message, 500);
+    }
+  },
 };

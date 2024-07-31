@@ -11,4 +11,9 @@ export {
   validParamsCategoryId,
   validUpdateCategory,
 } from "./category.validation";
-export { validBudget, validGetBudget } from "./budget.validation";
+export {
+  validBudget,
+  validGetBudget,
+  validUpdateBudget,
+  validDeleteBudget,
+} from "./budget.validation";

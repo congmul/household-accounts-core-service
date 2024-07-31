@@ -15,7 +15,6 @@ export interface IBudgetCreatePayload {
 }
 
 export interface IBudgetUpdatePayload {
-  date?: Date; // 2024-07-01T00:00:00 (Always first day of the month)
   amount?: number;
   category?: string;
 }

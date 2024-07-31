@@ -32,3 +32,18 @@ export const validGetBudget = {
       .required(),
   }),
 };
+
+export const validUpdateBudget = {
+  params: Joi.object().keys({
+    budgetId: Joi.string().custom(validObjectId).required(),
+  }),
+  body: Joi.object().keys({
+    amount: Joi.number(),
+    category: Joi.string(),
+  }),
+};
+export const validDeleteBudget = {
+  params: Joi.object().keys({
+    budgetId: Joi.string().custom(validObjectId).required(),
+  }),
+};
