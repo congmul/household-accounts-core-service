@@ -6,3 +6,10 @@ export interface ICategory {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface ICategoryCreatePayload {
+  userId: string;
+  name: string;
+  icon?: string;
+  color?: string;
+}

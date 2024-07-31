@@ -5,3 +5,4 @@ export {
   validPatchTransaction,
   validDeleteTransaction,
 } from "./transaction.validation";
+export { validCategory } from "./category.validation";

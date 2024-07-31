@@ -5,6 +5,6 @@ export {
   ITransactionUpdatePayload,
 } from "./transaction";
 
-export { ICategory } from "./category";
+export { ICategory, ICategoryCreatePayload } from "./category";
 export { IBudget } from "./budget";
 export { IAssets } from "./assets";

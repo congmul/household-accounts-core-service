@@ -9,6 +9,17 @@ export const TransactionMsg = {
   deleteDbError: { message: "Error during deleting transaction from DB." },
 };
 
+export const CategoryMgs = {
+  create: { message: "Category is created successfuly." },
+  patch: { message: "Category is updated successfuly." },
+  delete: { message: "Category is deleted successfuly." },
+  createDbError: { message: "Error during creating new Category in DB." },
+  notFound: { message: "The Category is not found." },
+  getDbError: { message: "Error during reading Categorys from DB." },
+  updateDbError: { message: "Error during updating Category from DB." },
+  deleteDbError: { message: "Error during deleting Category from DB." },
+};
+
 export const ErrorMsg = {
   exceptionError: { message: "Unknown has occurred." },
 };
