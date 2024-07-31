@@ -1,12 +1,17 @@
 import { Request, Response } from "express";
 import { TransactionMsg, ErrorMsg } from "../config/msgs";
-import { transactionService } from "../services";
+import { transactionService, userService } from "../services";
 import logger from "../utils/logger";
 
 export const createTransaction = async (req: Request, res: Response) => {
   try {
     const { userId } = req.body;
     // Check if the user exists
+    const isUser = userService.checkExist(userId);
+    if (!isUser) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
     await transactionService.createTransaction(req.body);
 
     res.status(201).send(TransactionMsg.create);
@@ -19,6 +24,10 @@ export const getTransactions = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
     // Check if the user exists
+    const isUser = await userService.checkExist(userId);
+    if (!isUser) {
+      return res.status(404).send({ message: "User not found" });
+    }
 
     const { type, year, month } = req.query;
     let result: any;
