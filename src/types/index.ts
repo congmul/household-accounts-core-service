@@ -7,3 +7,4 @@ export {
 
 export { ICategory } from "./category";
 export { IBudget } from "./budget";
+export { IAssets } from "./assets";
