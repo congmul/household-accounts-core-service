@@ -20,6 +20,17 @@ export const CategoryMgs = {
   deleteDbError: { message: "Error during deleting Category from DB." },
 };
 
+export const BudgetMgs = {
+  create: { message: "Budget is created successfuly." },
+  patch: { message: "Budget is updated successfuly." },
+  delete: { message: "Budget is deleted successfuly." },
+  createDbError: { message: "Error during creating new Budget in DB." },
+  notFound: { message: "The Budget is not found." },
+  getDbError: { message: "Error during reading Budgets from DB." },
+  updateDbError: { message: "Error during updating Budget from DB." },
+  deleteDbError: { message: "Error during deleting Budget from DB." },
+};
+
 export const ErrorMsg = {
   exceptionError: { message: "Unknown has occurred." },
 };

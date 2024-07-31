@@ -11,3 +11,5 @@ export {
   updateCategory,
   deleteCategory,
 } from "./category.controller";
+
+export { createBudget } from "./budget.controller";

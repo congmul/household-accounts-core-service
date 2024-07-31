@@ -10,5 +10,5 @@ export {
   ICategoryCreatePayload,
   ICategoryUpdatePayload,
 } from "./category";
-export { IBudget } from "./budget";
+export { IBudget, IBudgetCreatePayload, IBudgetUpdatePayload } from "./budget";
 export { IAssets } from "./assets";
