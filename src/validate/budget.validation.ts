@@ -12,3 +12,23 @@ export const validBudget = {
     category: Joi.string().required(),
   }),
 };
+
+export const validGetBudget = {
+  params: Joi.object().keys({
+    userId: Joi.string().custom(validObjectId).required(),
+  }),
+  query: Joi.object().keys({
+    year: Joi.string()
+      .pattern(/^\d{4}$/)
+      .required(),
+    month: Joi.string()
+      .custom((value: string, helpers: any) => {
+        const month = parseInt(value);
+        if (month < 1 || month > 12) {
+          return helpers.message("Month must be between 1 and 12");
+        }
+        return value;
+      })
+      .required(),
+  }),
+};

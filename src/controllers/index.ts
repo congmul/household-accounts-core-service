@@ -12,4 +12,4 @@ export {
   deleteCategory,
 } from "./category.controller";
 
-export { createBudget } from "./budget.controller";
+export { createBudget, getBudgets } from "./budget.controller";
