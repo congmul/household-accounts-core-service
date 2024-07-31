@@ -2,6 +2,7 @@ import { Budget } from "../models";
 import logger from "../utils/logger";
 import { ErrorMsg } from "../config/msgs";
 import { IBudgetCreatePayload, IBudgetUpdatePayload } from "../types";
+import AppError from "../utils/errorHandler";
 
 export const budgetService = {
   createBudget: async (payload: IBudgetCreatePayload) => {
@@ -10,7 +11,7 @@ export const budgetService = {
       return result;
     } catch (err) {
       logger.error(err);
-      throw { ...ErrorMsg.createDbError("budget") };
+      throw new AppError(ErrorMsg.createDbError("budget").message, 500);
     }
   },
 };
