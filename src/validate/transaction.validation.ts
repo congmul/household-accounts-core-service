@@ -12,6 +12,7 @@ export const validTransaction = {
     amount: Joi.number().required(),
     category: Joi.string(),
     note: Joi.string(),
+    fixedExpense: Joi.string().default("none"),
     paymentMethod: Joi.string().default("Credit Card"),
   }),
 };
@@ -46,6 +47,7 @@ export const validPatchTransaction = {
     amount: Joi.number(),
     category: Joi.string(),
     note: Joi.string(),
+    fixedExpense: Joi.string(),
     paymentMethod: Joi.string().valid("Credit Card", "Cash"),
   }),
 };
