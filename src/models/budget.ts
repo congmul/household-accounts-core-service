@@ -13,6 +13,8 @@ const budgetSchema = new Schema<IBudget>({
     set: (value: Date | string) => {
       // Ensure value is a Date object
       const date = new Date(value);
+      // Set date to the first day of the month
+      date.setUTCDate(1);
       // Set time to 00:00:00
       date.setUTCHours(0, 0, 0, 0);
       return date;
