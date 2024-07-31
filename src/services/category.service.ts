@@ -13,4 +13,13 @@ export const categoryService = {
       throw new Error(CategoryMgs.createDbError.message);
     }
   },
+  getCategories: async (userId: string) => {
+    try {
+      const result = await Category.find({ userId });
+      return result;
+    } catch (err) {
+      logger.error(err);
+      throw new Error(CategoryMgs.getDbError.message);
+    }
+  },
 };
