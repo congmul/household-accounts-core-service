@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CategoryMgs, ErrorMsg } from "../config/msgs";
+import { SuccessMsg, ErrorMsg } from "../config/msgs";
 import { categoryService, userService } from "../services";
 import logger from "../utils/logger";
 
@@ -7,16 +7,14 @@ export const createCategory = async (req: Request, res: Response) => {
   try {
     const { userId } = req.body;
     // Check if the user exists
-    const isUser = userService.checkExist(userId);
+    const isUser = await userService.checkExist(userId);
     if (!isUser) {
-      return res
-        .status(404)
-        .send({ message: "User not found", statusCode: 404 });
+      return res.status(404).send({ ...ErrorMsg.notFound("User"), userId });
     }
 
     await categoryService.createCategory(req.body);
 
-    res.status(201).send(CategoryMgs.create);
+    res.status(201).send(SuccessMsg.create("category"));
   } catch (err: any) {
     logger.error(err);
     res.status(500).send(err);
@@ -29,9 +27,7 @@ export const getCategories = async (req: Request, res: Response) => {
     // Check if the user exists
     const isUser = await userService.checkExist(userId);
     if (!isUser) {
-      return res
-        .status(404)
-        .send({ message: "User not found", statusCode: 404 });
+      return res.status(404).send({ ...ErrorMsg.notFound("User"), userId });
     }
     const result = await categoryService.getCategories(userId);
 
@@ -47,10 +43,12 @@ export const updateCategory = async (req: Request, res: Response) => {
     // Check if the category exists
     const category = await categoryService.getCategory(categoryId);
     if (!category) {
-      return res.status(404).send({ ...CategoryMgs.notFound, categoryId });
+      return res
+        .status(404)
+        .send({ ...ErrorMsg.notFound("Category"), categoryId });
     }
     await categoryService.updateCategory(categoryId, req.body);
-    res.status(200).send(CategoryMgs.patch);
+    res.status(200).send(SuccessMsg.update("Category"));
   } catch (err: any) {
     logger.error(err);
     res.status(500).send(err);
@@ -63,10 +61,12 @@ export const deleteCategory = async (req: Request, res: Response) => {
     // Check if the category exists
     const category = await categoryService.getCategory(categoryId);
     if (!category) {
-      return res.status(404).send({ ...CategoryMgs.notFound, categoryId });
+      return res
+        .status(404)
+        .send({ ...ErrorMsg.notFound("Category"), categoryId });
     }
     await categoryService.deleteCategory(categoryId);
-    res.status(200).send(CategoryMgs.delete);
+    res.status(200).send(SuccessMsg.delete("Category"));
   } catch (err) {
     logger.error(err);
     res.status(500).send(err);

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { BudgetMgs, ErrorMsg } from "../config/msgs";
+import { SuccessMsg, ErrorMsg } from "../config/msgs";
 import { budgetService, userService } from "../services";
 import logger from "../utils/logger";
 
@@ -7,16 +7,14 @@ export const createBudget = async (req: Request, res: Response) => {
   try {
     const { userId } = req.body;
     // Check if the user exists
-    const isUser = userService.checkExist(userId);
+    const isUser = await userService.checkExist(userId);
     if (!isUser) {
-      return res
-        .status(404)
-        .send({ message: "User not found", statusCode: 404 });
+      return res.status(404).send({ ...ErrorMsg.notFound("User"), userId });
     }
 
     await budgetService.createBudget(req.body);
 
-    res.status(201).send(BudgetMgs.create);
+    res.status(201).send(SuccessMsg.create("budget"));
   } catch (err: any) {
     logger.error(err);
     res.status(500).send(err);
