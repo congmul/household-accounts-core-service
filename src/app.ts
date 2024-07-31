@@ -3,7 +3,12 @@ import cors from "cors";
 import config from "./config/config";
 import dbLoader from "./config/db";
 import logger from "./utils/logger";
-import { swaggerRoute, transactionRoute } from "./routes";
+import {
+  swaggerRoute,
+  transactionRoute,
+  categoryRoute,
+  budgetRoute,
+} from "./routes";
 
 const app = express();
 
@@ -15,6 +20,8 @@ dbLoader();
 
 app.use("/", swaggerRoute);
 app.use("/transaction", transactionRoute);
+app.use("/category", categoryRoute);
+app.use("/budget", budgetRoute);
 
 app.get("/health", (req: Request, res: Response) => {
   res.send({
