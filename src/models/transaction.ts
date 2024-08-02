@@ -38,7 +38,7 @@ const transactionSchema = new Schema<ITransaction>({
   },
   fixedExpense: {
     type: String,
-    default: "none",
+    default: "do_not_repeat",
   },
   createdAt: {
     type: Date,
