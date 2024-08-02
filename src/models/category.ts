@@ -12,6 +12,10 @@ const categorySchema = new Schema<ICategory>({
     required: true,
     trim: true,
   },
+  type: {
+    type: String, // income or expense
+    required: true,
+  },
   icon: {
     type: String,
     trim: true,

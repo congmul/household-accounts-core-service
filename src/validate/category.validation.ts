@@ -8,6 +8,7 @@ export const validCategory = {
   body: Joi.object().keys({
     userId: Joi.string().custom(validObjectId).required(),
     name: Joi.string().required(),
+    type: Joi.string().valid("income", "expense").required(),
     icon: Joi.string(),
     color: Joi.string(),
   }),
@@ -26,6 +27,7 @@ export const validUpdateCategory = {
   ...validParamsCategoryId,
   body: Joi.object().keys({
     name: Joi.string(),
+    type: Joi.string(),
     icon: Joi.string(),
     color: Joi.string(),
   }),
