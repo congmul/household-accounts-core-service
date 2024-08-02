@@ -4,25 +4,20 @@ import { validObjectId } from "./validate.middleware";
 
 const Joi = JoiBase.extend(JoiDate);
 
-export const validTransaction = {
+export const validBudget = {
   body: Joi.object().keys({
     userId: Joi.string().custom(validObjectId).required(),
     date: Joi.date().format("YYYY-MM-DD").required(),
-    type: Joi.string().valid("income", "expense").required(),
     amount: Joi.number().required(),
-    category: Joi.string(),
-    note: Joi.string(),
-    fixedExpense: Joi.string().default("none"),
-    paymentMethod: Joi.string().default("Credit Card"),
+    category: Joi.string().required(),
   }),
 };
 
-export const validGetTransaction = {
+export const validGetBudget = {
   params: Joi.object().keys({
     userId: Joi.string().custom(validObjectId).required(),
   }),
   query: Joi.object().keys({
-    type: Joi.string().valid("income", "expense").required(),
     year: Joi.string()
       .pattern(/^\d{4}$/)
       .required(),
@@ -37,22 +32,18 @@ export const validGetTransaction = {
       .required(),
   }),
 };
-export const validPatchTransaction = {
+
+export const validUpdateBudget = {
   params: Joi.object().keys({
-    transactionId: Joi.string().custom(validObjectId).required(),
+    budgetId: Joi.string().custom(validObjectId).required(),
   }),
   body: Joi.object().keys({
-    date: Joi.date().format("YYYY-MM-DD"),
-    type: Joi.string().valid("income", "expense"),
     amount: Joi.number(),
     category: Joi.string(),
-    note: Joi.string(),
-    fixedExpense: Joi.string(),
-    paymentMethod: Joi.string().valid("Credit Card", "Cash"),
   }),
 };
-export const validDeleteTransaction = {
+export const validDeleteBudget = {
   params: Joi.object().keys({
-    transactionId: Joi.string().custom(validObjectId).required(),
+    budgetId: Joi.string().custom(validObjectId).required(),
   }),
 };

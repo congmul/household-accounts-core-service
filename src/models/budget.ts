@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
-import { ITransaction } from "../types";
+import { IBudget } from "../types";
 
-const transactionSchema = new Schema<ITransaction>({
+const budgetSchema = new Schema<IBudget>({
   userId: {
     type: String,
     required: true,
@@ -13,32 +13,20 @@ const transactionSchema = new Schema<ITransaction>({
     set: (value: Date | string) => {
       // Ensure value is a Date object
       const date = new Date(value);
+      // Set date to the first day of the month
+      date.setUTCDate(1);
       // Set time to 00:00:00
       date.setUTCHours(0, 0, 0, 0);
       return date;
     },
   },
-  type: {
-    type: String,
-    required: true,
-  },
   amount: {
     type: Number,
     required: true,
   },
-  // TODO: need subCategory
   category: {
     type: String,
-  },
-  note: {
-    type: String,
-  },
-  paymentMethod: {
-    type: String,
-  },
-  fixedExpense: {
-    type: String,
-    default: "none",
+    required: true,
   },
   createdAt: {
     type: Date,
@@ -50,9 +38,9 @@ const transactionSchema = new Schema<ITransaction>({
   },
 });
 
-transactionSchema.pre("findOneAndUpdate", function () {
+budgetSchema.pre("findOneAndUpdate", function () {
   this.set({ updatedAt: Date.now() });
 });
 
-const Transaction = model("Transaction", transactionSchema);
-export default Transaction;
+const Budget = model("Budget", budgetSchema);
+export default Budget;

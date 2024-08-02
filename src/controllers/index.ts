@@ -4,3 +4,17 @@ export {
   patchTransaction,
   deleteTransaction,
 } from "./transaction.controller";
+
+export {
+  createCategory,
+  getCategories,
+  updateCategory,
+  deleteCategory,
+} from "./category.controller";
+
+export {
+  createBudget,
+  getBudgets,
+  updateBudget,
+  deleteBudget,
+} from "./budget.controller";

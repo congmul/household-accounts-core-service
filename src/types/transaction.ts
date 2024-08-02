@@ -8,6 +8,7 @@ export interface ITransaction {
   note: string;
   type: ITransactionType;
   paymentMethod: string;
+  fixedExpense: string; // none, daily, weekly, monthly, annually
   createdAt: Date;
   updatedAt: Date;
 }
@@ -19,6 +20,7 @@ export interface ITransactionCreatePayload {
   category?: string;
   note?: string;
   type: ITransactionType;
+  fixedExpense: string; // none, daily, weekly, monthly, annually
   paymentMethod: string;
 }
 
@@ -28,5 +30,6 @@ export interface ITransactionUpdatePayload {
   category?: string;
   note?: string;
   type?: ITransactionType;
+  fixedExpense?: string; // none, daily, weekly, monthly, annually
   paymentMethod?: string;
 }

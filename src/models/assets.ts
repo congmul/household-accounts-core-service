@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
-import { ITransaction } from "../types";
+import { IAssets } from "../types";
 
-const transactionSchema = new Schema<ITransaction>({
+const assetsSchema = new Schema<IAssets>({
   userId: {
     type: String,
     required: true,
@@ -18,27 +18,12 @@ const transactionSchema = new Schema<ITransaction>({
       return date;
     },
   },
-  type: {
-    type: String,
-    required: true,
-  },
   amount: {
     type: Number,
     required: true,
   },
-  // TODO: need subCategory
-  category: {
+  source: {
     type: String,
-  },
-  note: {
-    type: String,
-  },
-  paymentMethod: {
-    type: String,
-  },
-  fixedExpense: {
-    type: String,
-    default: "none",
   },
   createdAt: {
     type: Date,
@@ -50,9 +35,9 @@ const transactionSchema = new Schema<ITransaction>({
   },
 });
 
-transactionSchema.pre("findOneAndUpdate", function () {
+assetsSchema.pre("findOneAndUpdate", function () {
   this.set({ updatedAt: Date.now() });
 });
 
-const Transaction = model("Transaction", transactionSchema);
-export default Transaction;
+const Assets = model("Assets", assetsSchema);
+export default Assets;

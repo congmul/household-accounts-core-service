@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { TransactionMsg, ErrorMsg } from "../config/msgs";
+import { SuccessMsg, ErrorMsg } from "../config/msgs";
 import { transactionService, userService } from "../services";
 import logger from "../utils/logger";
 
@@ -7,17 +7,15 @@ export const createTransaction = async (req: Request, res: Response) => {
   try {
     const { userId } = req.body;
     // Check if the user exists
-    const isUser = userService.checkExist(userId);
+    const isUser = await userService.checkExist(userId);
     if (!isUser) {
-      return res.status(404).send({ message: "User not found" });
+      return res.status(404).send({ ...ErrorMsg.notFound("User"), userId });
     }
-
     await transactionService.createTransaction(req.body);
-
-    res.status(201).send(TransactionMsg.create);
+    res.status(201).send(SuccessMsg.create("transcation"));
   } catch (err: any) {
     logger.error(err);
-    res.status(500).send(ErrorMsg.exceptionError);
+    res.status(500).send(err);
   }
 };
 export const getTransactions = async (req: Request, res: Response) => {
@@ -26,7 +24,7 @@ export const getTransactions = async (req: Request, res: Response) => {
     // Check if the user exists
     const isUser = await userService.checkExist(userId);
     if (!isUser) {
-      return res.status(404).send({ message: "User not found" });
+      return res.status(404).send({ ...ErrorMsg.notFound("User"), userId });
     }
 
     const { type, year, month } = req.query;
@@ -49,7 +47,9 @@ export const getTransactions = async (req: Request, res: Response) => {
     res.status(200).send(result);
   } catch (err: any) {
     logger.error(err);
-    res.status(500).send(ErrorMsg.exceptionError);
+    res
+      .status(err.statusCode)
+      .send({ message: err.message, statusCode: err.statusCode });
   }
 };
 export const patchTransaction = async (req: Request, res: Response) => {
@@ -60,15 +60,15 @@ export const patchTransaction = async (req: Request, res: Response) => {
     if (!transaction) {
       return res
         .status(404)
-        .send({ ...TransactionMsg.notFound, transactionId });
+        .send({ ...ErrorMsg.notFound("Transaction"), transactionId });
     }
 
     await transactionService.updateTransaction(transactionId, req.body);
 
-    res.status(200).send(TransactionMsg.patch);
+    res.status(200).send(SuccessMsg.update("Transcation"));
   } catch (err: any) {
     logger.error(err);
-    res.status(500).send(ErrorMsg.exceptionError);
+    res.status(500).send(err);
   }
 };
 export const deleteTransaction = async (req: Request, res: Response) => {
@@ -79,12 +79,12 @@ export const deleteTransaction = async (req: Request, res: Response) => {
     if (!transaction) {
       return res
         .status(404)
-        .send({ ...TransactionMsg.notFound, transactionId });
+        .send({ ...ErrorMsg.notFound("Transaction"), transactionId });
     }
     await transactionService.deleteTransaction(transactionId);
-    res.status(200).send(TransactionMsg.delete);
+    res.status(200).send(SuccessMsg.delete("Transcation"));
   } catch (err) {
     logger.error(err);
-    res.status(500).send(ErrorMsg.exceptionError);
+    res.status(500).send(err);
   }
 };
