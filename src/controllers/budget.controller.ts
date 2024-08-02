@@ -22,7 +22,7 @@ export const createBudget = async (req: Request, res: Response) => {
 };
 export const getBudgets = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.body;
+    const { userId } = req.params;
     // Check if the user exists
     const isUser = await userService.checkExist(userId);
     if (!isUser) {
