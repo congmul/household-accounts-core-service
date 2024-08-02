@@ -45,6 +45,11 @@ export const transactionService = {
             totalAmount: { $sum: "$amount" },
           },
         },
+        {
+          $sort: {
+            _id: 1, // Sort by the _id field which contains the formatted date string
+          },
+        },
       ]);
       return result;
     } catch (err) {
@@ -72,6 +77,11 @@ export const transactionService = {
             _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
             transactions: { $push: "$$ROOT" },
             totalAmount: { $sum: "$amount" },
+          },
+        },
+        {
+          $sort: {
+            _id: 1, // Sort by the _id field which contains the formatted date string
           },
         },
       ]);
