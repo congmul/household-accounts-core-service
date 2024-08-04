@@ -36,9 +36,9 @@ const transactionSchema = new Schema<ITransaction>({
   paymentMethod: {
     type: String,
   },
-  fixedExpense: {
-    type: String,
-    default: "do_not_repeat",
+  fixedExpenseMonthly: {
+    type: Boolean,
+    default: false,
   },
   createdAt: {
     type: Date,
