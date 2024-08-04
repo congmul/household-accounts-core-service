@@ -14,9 +14,9 @@ export const categoryService = {
       throw new AppError(ErrorMsg.createDbError("category").message, 500);
     }
   },
-  getCategories: async (userId: string) => {
+  getCategories: async (userId: string, type: string) => {
     try {
-      const result = await Category.find({ userId });
+      const result = await Category.find({ userId, type });
       return result;
     } catch (err) {
       logger.error(err);
