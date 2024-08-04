@@ -7,7 +7,7 @@ export {
 } from "./transaction.validation";
 export {
   validCategory,
-  validParamsUserId,
+  validGetCategory,
   validParamsCategoryId,
   validUpdateCategory,
 } from "./category.validation";

@@ -29,7 +29,8 @@ export const getCategories = async (req: Request, res: Response) => {
     if (!isUser) {
       return res.status(404).send({ ...ErrorMsg.notFound("User"), userId });
     }
-    const result = await categoryService.getCategories(userId);
+    const { type } = req.query;
+    const result = await categoryService.getCategories(userId, type as string);
 
     res.status(200).send(result);
   } catch (err: any) {
