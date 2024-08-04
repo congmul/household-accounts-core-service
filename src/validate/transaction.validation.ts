@@ -35,6 +35,7 @@ export const validGetTransaction = {
         return value;
       })
       .required(),
+    groupBy: Joi.string().default("date"),
   }),
 };
 export const validPatchTransaction = {

@@ -23,10 +23,19 @@ export const transactionService = {
       throw new AppError(ErrorMsg.getDbError("transaction").message, 500);
     }
   },
-  getExpenses: async (userId: string, year: number, month: number) => {
+  getExpenses: async (
+    userId: string,
+    year: number,
+    month: number,
+    groupBy: string,
+  ) => {
     try {
       const startDate = new Date(year, month - 1, 1, -7);
       const endDate = new Date(year, month, 1, -7);
+      const group =
+        groupBy === "date"
+          ? { $dateToString: { format: "%Y-%m-%d", date: "$date" } }
+          : "$category";
       const result = await Transaction.aggregate([
         {
           $match: {
@@ -40,7 +49,7 @@ export const transactionService = {
         },
         {
           $group: {
-            _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+            _id: group,
             transactions: { $push: "$$ROOT" },
             totalAmount: { $sum: "$amount" },
           },
