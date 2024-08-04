@@ -27,13 +27,14 @@ export const getTransactions = async (req: Request, res: Response) => {
       return res.status(404).send({ ...ErrorMsg.notFound("User"), userId });
     }
 
-    const { type, year, month } = req.query;
+    const { type, year, month, groupBy } = req.query;
     let result: any;
     if (type === "expense") {
       result = await transactionService.getExpenses(
         userId,
         parseInt(year as string),
         parseInt(month as string),
+        groupBy as string,
       );
     } else {
       // income
