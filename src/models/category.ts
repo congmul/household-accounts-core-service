@@ -1,6 +1,30 @@
 import { model, Schema } from "mongoose";
 import { ICategory } from "../types";
 
+const subcategorySchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  icon: {
+    type: String,
+    trim: true,
+  },
+  color: {
+    type: String,
+    trim: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
 const categorySchema = new Schema<ICategory>({
   userId: {
     type: String,
@@ -24,6 +48,7 @@ const categorySchema = new Schema<ICategory>({
     type: String,
     trim: true,
   },
+  subcategories: [subcategorySchema],
   createdAt: {
     type: Date,
     default: Date.now,

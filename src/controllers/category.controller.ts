@@ -20,6 +20,25 @@ export const createCategory = async (req: Request, res: Response) => {
     res.status(500).send(err);
   }
 };
+export const createSubcategory = async (req: Request, res: Response) => {
+  try {
+    const { categoryId } = req.params;
+    // Check if the category exists
+    const category = await categoryService.getCategory(categoryId);
+    if (!category) {
+      return res
+        .status(404)
+        .send({ ...ErrorMsg.notFound("Category"), categoryId });
+    }
+
+    await categoryService.createSubcategory(categoryId, req.body);
+
+    res.status(201).send(SuccessMsg.create("subcategory"));
+  } catch (err: any) {
+    logger.error(err);
+    res.status(500).send(err);
+  }
+};
 
 export const getCategories = async (req: Request, res: Response) => {
   try {

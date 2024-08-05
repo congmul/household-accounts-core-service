@@ -13,6 +13,16 @@ export const validCategory = {
     color: Joi.string(),
   }),
 };
+export const validSubCategory = {
+  params: Joi.object().keys({
+    categoryId: Joi.string().custom(validObjectId).required(),
+  }),
+  body: Joi.object().keys({
+    name: Joi.string().required(),
+    icon: Joi.string(),
+    color: Joi.string(),
+  }),
+};
 export const validGetCategory = {
   params: Joi.object().keys({
     userId: Joi.string().custom(validObjectId).required(),

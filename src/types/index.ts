@@ -6,6 +6,7 @@ export {
 } from "./transaction";
 
 export {
+  IBasicCategory,
   ICategory,
   ICategoryCreatePayload,
   ICategoryUpdatePayload,
