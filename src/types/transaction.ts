@@ -5,6 +5,7 @@ export interface ITransaction {
   date: Date; // 2024-07-28T00:00:00
   amount: number;
   category: string;
+  subcategory: string;
   note: string;
   type: ITransactionType;
   paymentMethod: string;
@@ -18,6 +19,7 @@ export interface ITransactionCreatePayload {
   date: Date; // 2024-07-28T00:00:00
   amount: number;
   category?: string;
+  subcategory?: string;
   note?: string;
   type: ITransactionType;
   fixedExpenseMonthly: boolean;
@@ -28,6 +30,7 @@ export interface ITransactionUpdatePayload {
   date?: Date; // 2024-07-28T00:00:00
   amount?: number;
   category?: string;
+  subcategory?: string;
   note?: string;
   type?: ITransactionType;
   fixedExpenseMonthly?: boolean;
