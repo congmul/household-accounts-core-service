@@ -7,6 +7,7 @@ export {
 
 export {
   createCategory,
+  createSubcategory,
   getCategories,
   updateCategory,
   deleteCategory,

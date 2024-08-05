@@ -1,11 +1,14 @@
-export interface ICategory {
-  userId: string;
+export interface IBasicCategory {
   name: string;
   icon: string;
   color: string;
-  type: string; // income or expense
   createdAt: Date;
   updatedAt: Date;
+}
+export interface ICategory extends IBasicCategory {
+  userId: string;
+  subcategories: IBasicCategory[];
+  type: string; // income or expense
 }
 
 export interface ICategoryCreatePayload {
