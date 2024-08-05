@@ -32,10 +32,15 @@ export const transactionService = {
     try {
       const startDate = new Date(year, month - 1, 1, -7);
       const endDate = new Date(year, month, 1, -7);
-      const group =
-        groupBy === "date"
-          ? { $dateToString: { format: "%Y-%m-%d", date: "$date" } }
-          : "$category";
+      let group: any;
+      if (groupBy == "undefined") {
+        group = { $dateToString: { format: "%Y-%m-%d", date: "$date" } };
+      } else {
+        group =
+          groupBy === "date"
+            ? { $dateToString: { format: "%Y-%m-%d", date: "$date" } }
+            : "$category";
+      }
       const result = await Transaction.aggregate([
         {
           $match: {
