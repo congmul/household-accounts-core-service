@@ -46,6 +46,51 @@ The main goal of the Household Accounts Core Service is to handle all data opera
 [API Specification](https://household-accounts-core-service.azurewebsites.net/api-spec)
 
 ## Project Structure
+```bash
+household-accounts-core-service/
+  ├── src/ 
+  │ ├── config/
+  │ │    ├── db.ts
+  │ │    ├── config.ts
+  │ │    └── msgs.ts
+  │ ├── controllers/
+  │ │    ├── budget.controller.ts
+  │ │    ├── category.controller.ts
+  │ │    ├── index.ts  
+  │ │    └── transaction.controller.ts
+  │ ├── models/
+  │ │    ├── assets.ts  
+  │ │    ├── budget.ts  
+  │ │    ├── category.ts  
+  │ │    ├── index.ts  
+  │ │    └── transaction.ts
+  │ ├── routes/
+  │ │    ├── budget.ts
+  │ │    ├── category.ts
+  │ │    ├── index.ts
+  │ │    ├── swagger.ts
+  │ │    └── transaction.ts
+  │ ├── services/
+  │ │    ├── budget.service.ts
+  │ │    ├── category.service.ts
+  │ │    ├── index.ts
+  │ │    ├── transaction.service.ts
+  │ │    └── user.service.ts
+  │ ├── types/
+  │ │    ├── assets.ts
+  │ │    ├── budget.ts
+  │ │    ├── category.ts
+  │ │    ├── index.ts
+  │ │    └── transaction.ts
+  │ ├── utils/
+  │ │    ├── errorHandler.ts
+  │ │    ├── logger.ts
+  │ │    └── pick.ts
+  │ ├── api-spec.json 
+  │ └── app.ts
+  ├── package.json
+  └── .env
+```
 
 ## Contributing
 
