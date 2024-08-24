@@ -27,6 +27,14 @@
         {
             "name": "Transaction",
             "description": "Paths that handle transactions such as income and expense"
+        },
+        {
+            "name": "Category",
+            "description": "Paths that handle categories."
+        },
+        {
+            "name": "Budget",
+            "description": "Paths that handle budget."
         }
     ],
     "paths": {
@@ -66,6 +74,93 @@
                         "description": "API unavailable"
                     }
                 }
+            }
+        },
+        "/transaction": {
+            "post":{
+                "tags": ["Transaction"],
+                "operationId": "post-transaction",
+                "summary": "",
+                "description": ""
+            },
+            "get":{
+                "tags": ["Transaction"],
+                "operationId": "get-transaction",
+                "summary": "",
+                "description": ""
+            },
+            "patch":{
+                "tags": ["Transaction"],
+                "operationId": "patch-transaction",
+                "summary": "",
+                "description": ""
+            },
+            "delete":{
+                "tags": ["Transaction"],
+                "operationId": "delete-transaction",
+                "summary": "",
+                "description": ""
+            }
+        },
+        "/category": {
+            "post":{
+                "tags": ["Category"],
+                "operationId": "post-category",
+                "summary": "",
+                "description": ""
+            },
+            "get":{
+                "tags": ["Category"],
+                "operationId": "get-category",
+                "summary": "",
+                "description": ""
+            },
+            "patch":{
+                "tags": ["Category"],
+                "operationId": "patch-category",
+                "summary": "",
+                "description": ""
+            },
+            "delete":{
+                "tags": ["Category"],
+                "operationId": "delete-category",
+                "summary": "",
+                "description": ""
+            }
+
+        },
+        "/category/{categoryId}/subcategory": {
+            "post":{
+                "tags": ["Category"],
+                "operationId": "post-sub-category",
+                "summary": "",
+                "description": ""
+            }
+        },
+        "/budget": {
+            "post":{
+                "tags": ["Budget"],
+                "operationId": "post-budget",
+                "summary": "",
+                "description": ""
+            },
+            "get":{
+                "tags": ["Budget"],
+                "operationId": "get-budget",
+                "summary": "",
+                "description": ""
+            },
+            "patch":{
+                "tags": ["Budget"],
+                "operationId": "patch-budget",
+                "summary": "",
+                "description": ""
+            },
+            "delete":{
+                "tags": ["Budget"],
+                "operationId": "delete-budget",
+                "summary": "",
+                "description": ""
             }
         }
     }
