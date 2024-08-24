@@ -3,7 +3,7 @@
     "info": {
         "title": "Household Accounts Core Service",
         "version": "0.0.1",
-        "description": "",        
+        "description": "The main goal of the Household Accounts Core Service is to handle all data operations for creating, reading, updating, and deleting records. This service is responsible for CRUD operations on Transactions, Categories, and Budgets.",        
         "contact": {
             "name": "Jehyun Jung",
             "email": "jehyunjung@gmail.com"
@@ -26,7 +26,15 @@
         },
         {
             "name": "Transaction",
-            "description": "Paths that handle transactions such as income and expense"
+            "description": "Paths that handle operations on transactions such as income and expense"
+        },
+        {
+            "name": "Category",
+            "description": "Paths that handle operations on categories."
+        },
+        {
+            "name": "Budget",
+            "description": "Paths that handle budget."
         }
     ],
     "paths": {
@@ -66,6 +74,93 @@
                         "description": "API unavailable"
                     }
                 }
+            }
+        },
+        "/transaction": {
+            "post":{
+                "tags": ["Transaction"],
+                "operationId": "post-transaction",
+                "summary": "Create a transaction with their type.",
+                "description": "Create a transaction with their type. There are three types of transaction, 'income' and 'expense'"
+            },
+            "get":{
+                "tags": ["Transaction"],
+                "operationId": "get-transaction",
+                "summary": "View all transactions by the range of month.",
+                "description": "View all transactions by the range of month, which you are apart of."
+            },
+            "patch":{
+                "tags": ["Transaction"],
+                "operationId": "patch-transaction",
+                "summary": "Update a specific transaction by id.",
+                "description": "Update a specific transaction by id."
+            },
+            "delete":{
+                "tags": ["Transaction"],
+                "operationId": "delete-transaction",
+                "summary": "Delete a specific transaction by id.",
+                "description": "Delete a specific transaction by id."
+            }
+        },
+        "/category": {
+            "post":{
+                "tags": ["Category"],
+                "operationId": "post-category",
+                "summary": "Create a category with their type.",
+                "description": "Create a category with their type. There are three types of category, 'income' and 'expense'"
+            },
+            "get":{
+                "tags": ["Category"],
+                "operationId": "get-category",
+                "summary": "View all categories by type, which you are apart of.",
+                "description": "View all categories by type, which you are apart of. You will get all categories you created."
+            },
+            "patch":{
+                "tags": ["Category"],
+                "operationId": "patch-category",
+                "summary": "Update a specific category by id.",
+                "description": "Update a specific category by id."
+            },
+            "delete":{
+                "tags": ["Category"],
+                "operationId": "delete-category",
+                "summary": "Delete a specific category by id.",
+                "description": "Delete a specific category by id."
+            }
+
+        },
+        "/category/{categoryId}/subcategory": {
+            "post":{
+                "tags": ["Category"],
+                "operationId": "post-sub-category",
+                "summary": "Create a subcategory of a specfic category.",
+                "description": "Create a subcategory of a specfic category."
+            }
+        },
+        "/budget": {
+            "post":{
+                "tags": ["Budget"],
+                "operationId": "post-budget",
+                "summary": "Create a budget.",
+                "description": "Create a budget. There are three identifiers, 'userId', 'date', and 'category'"
+            },
+            "get":{
+                "tags": ["Budget"],
+                "operationId": "get-budget",
+                "summary": "View all budget by the range of month",
+                "description": "View all budget by the range of month, which you are a part of."
+            },
+            "patch":{
+                "tags": ["Budget"],
+                "operationId": "patch-budget",
+                "summary": "Update a specific budget by id.",
+                "description": "Update a specific budget by id."
+            },
+            "delete":{
+                "tags": ["Budget"],
+                "operationId": "delete-budget",
+                "summary": "Delete a specific budget by id.",
+                "description": "Delete a specific budget by id."
             }
         }
     }
