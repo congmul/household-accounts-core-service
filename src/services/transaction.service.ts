@@ -71,35 +71,61 @@ export const transactionService = {
       throw new AppError(ErrorMsg.getDbError("transaction").message, 500);
     }
   },
-  getIncomes: async (userId: string, year: number, month: number) => {
+  getIncomes: async (
+    userId: string,
+    year: number,
+    month: number,
+    groupBy: string,
+  ) => {
     try {
       const startDate = new Date(year, month - 1, 1);
       const endDate = new Date(year, month, 1);
-      const result = await Transaction.aggregate([
-        {
-          $match: {
-            userId: userId,
-            type: { $ne: "expense" },
-            date: {
-              $gte: startDate,
-              $lt: endDate,
+      if (groupBy && groupBy === "date") {
+        const result = await Transaction.aggregate([
+          {
+            $match: {
+              userId: userId,
+              type: { $ne: "expense" },
+              date: {
+                $gte: startDate,
+                $lt: endDate,
+              },
             },
           },
-        },
-        {
-          $group: {
-            _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
-            transactions: { $push: "$$ROOT" },
-            totalAmount: { $sum: "$amount" },
+          {
+            $group: {
+              _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+              transactions: { $push: "$$ROOT" },
+              totalAmount: { $sum: "$amount" },
+            },
           },
-        },
-        {
-          $sort: {
-            _id: 1, // Sort by the _id field which contains the formatted date string
+          {
+            $sort: {
+              _id: 1, // Sort by the _id field which contains the formatted date string
+            },
           },
-        },
-      ]);
-      return result;
+        ]);
+        return result;
+      } else {
+        const result = await Transaction.aggregate([
+          {
+            $match: {
+              userId: userId,
+              type: { $ne: "expense" },
+              date: {
+                $gte: startDate,
+                $lt: endDate,
+              },
+            },
+          },
+          {
+            $sort: {
+              date: 1, // Sort by the _id field which contains the formatted date string
+            },
+          },
+        ]);
+        return result;
+      }
     } catch (err) {
       logger.error(err);
       throw new AppError(ErrorMsg.getDbError("transaction").message, 500);

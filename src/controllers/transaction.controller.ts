@@ -42,6 +42,7 @@ export const getTransactions = async (req: Request, res: Response) => {
         userId,
         parseInt(year as string),
         parseInt(month as string),
+        groupBy as string,
       );
     }
 
