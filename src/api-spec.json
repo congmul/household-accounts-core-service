@@ -3,7 +3,7 @@
     "info": {
         "title": "Household Accounts Core Service",
         "version": "0.0.1",
-        "description": "",        
+        "description": "The main goal of the Household Accounts Core Service is to handle all data operations for creating, reading, updating, and deleting records. This service is responsible for CRUD operations on Transactions, Categories, and Budgets.",        
         "contact": {
             "name": "Jehyun Jung",
             "email": "jehyunjung@gmail.com"
