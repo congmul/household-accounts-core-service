@@ -26,11 +26,11 @@
         },
         {
             "name": "Transaction",
-            "description": "Paths that handle transactions such as income and expense"
+            "description": "Paths that handle operations on transactions such as income and expense"
         },
         {
             "name": "Category",
-            "description": "Paths that handle categories."
+            "description": "Paths that handle operations on categories."
         },
         {
             "name": "Budget",
@@ -80,52 +80,52 @@
             "post":{
                 "tags": ["Transaction"],
                 "operationId": "post-transaction",
-                "summary": "",
-                "description": ""
+                "summary": "Create a transaction with their type.",
+                "description": "Create a transaction with their type. There are three types of transaction, 'income' and 'expense'"
             },
             "get":{
                 "tags": ["Transaction"],
                 "operationId": "get-transaction",
-                "summary": "",
-                "description": ""
+                "summary": "View all transactions by the range of month.",
+                "description": "View all transactions by the range of month, which you are apart of."
             },
             "patch":{
                 "tags": ["Transaction"],
                 "operationId": "patch-transaction",
-                "summary": "",
-                "description": ""
+                "summary": "Update a specific transaction by id.",
+                "description": "Update a specific transaction by id."
             },
             "delete":{
                 "tags": ["Transaction"],
                 "operationId": "delete-transaction",
-                "summary": "",
-                "description": ""
+                "summary": "Delete a specific transaction by id.",
+                "description": "Delete a specific transaction by id."
             }
         },
         "/category": {
             "post":{
                 "tags": ["Category"],
                 "operationId": "post-category",
-                "summary": "",
-                "description": ""
+                "summary": "Create a category with their type.",
+                "description": "Create a category with their type. There are three types of category, 'income' and 'expense'"
             },
             "get":{
                 "tags": ["Category"],
                 "operationId": "get-category",
-                "summary": "",
-                "description": ""
+                "summary": "View all categories by type, which you are apart of.",
+                "description": "View all categories by type, which you are apart of. You will get all categories you created."
             },
             "patch":{
                 "tags": ["Category"],
                 "operationId": "patch-category",
-                "summary": "",
-                "description": ""
+                "summary": "Update a specific category by id.",
+                "description": "Update a specific category by id."
             },
             "delete":{
                 "tags": ["Category"],
                 "operationId": "delete-category",
-                "summary": "",
-                "description": ""
+                "summary": "Delete a specific category by id.",
+                "description": "Delete a specific category by id."
             }
 
         },
@@ -133,34 +133,34 @@
             "post":{
                 "tags": ["Category"],
                 "operationId": "post-sub-category",
-                "summary": "",
-                "description": ""
+                "summary": "Create a subcategory of a specfic category.",
+                "description": "Create a subcategory of a specfic category."
             }
         },
         "/budget": {
             "post":{
                 "tags": ["Budget"],
                 "operationId": "post-budget",
-                "summary": "",
-                "description": ""
+                "summary": "Create a budget.",
+                "description": "Create a budget. There are three identifiers, 'userId', 'date', and 'category'"
             },
             "get":{
                 "tags": ["Budget"],
                 "operationId": "get-budget",
-                "summary": "",
-                "description": ""
+                "summary": "View all budget by the range of month",
+                "description": "View all budget by the range of month, which you are a part of."
             },
             "patch":{
                 "tags": ["Budget"],
                 "operationId": "patch-budget",
-                "summary": "",
-                "description": ""
+                "summary": "Update a specific budget by id.",
+                "description": "Update a specific budget by id."
             },
             "delete":{
                 "tags": ["Budget"],
                 "operationId": "delete-budget",
-                "summary": "",
-                "description": ""
+                "summary": "Delete a specific budget by id.",
+                "description": "Delete a specific budget by id."
             }
         }
     }
