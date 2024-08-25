@@ -8,7 +8,7 @@ export const validTransaction = {
   body: Joi.object().keys({
     userId: Joi.string().custom(validObjectId).required(),
     date: Joi.date().format("YYYY-MM-DD").required(),
-    type: Joi.string().valid("income", "expense").required(),
+    type: Joi.string().valid("income", "expense", "investment").required(),
     amount: Joi.number().required(),
     category: Joi.string(),
     subcategory: Joi.string(),
@@ -23,7 +23,7 @@ export const validGetTransaction = {
     userId: Joi.string().custom(validObjectId).required(),
   }),
   query: Joi.object().keys({
-    type: Joi.string().valid("income", "expense").required(),
+    type: Joi.string().valid("income", "expense", "investment").required(),
     year: Joi.string()
       .pattern(/^\d{4}$/)
       .required(),
@@ -45,7 +45,7 @@ export const validPatchTransaction = {
   }),
   body: Joi.object().keys({
     date: Joi.date().format("YYYY-MM-DD"),
-    type: Joi.string().valid("income", "expense"),
+    type: Joi.string().valid("income", "expense", "investment"),
     amount: Joi.number(),
     category: Joi.string(),
     subcategory: Joi.string(),
