@@ -6,7 +6,12 @@
       "description": "The main goal of the Household Accounts Core Service is to handle all data operations for creating, reading, updating, and deleting records. This service is responsible for CRUD operations on Transactions, Categories, and Budgets.",
       "contact": {
         "name": "Jehyun Jung",
-        "email": "jehyunjung@gmail.com"
+        "email": "jehyunjung@gmail.com",
+        "url": "https://congmul.github.io/jehyunjung/"
+      },
+      "license": {
+        "name": "MIT",
+        "url": "https://www.mit.edu/~amini/LICENSE.md"
       }
     },
     "servers": [
@@ -21,20 +26,20 @@
     ],
     "tags": [
       {
-        "name": "Operational",
-        "description": "Operational endpoints used to check the status of server"
-      },
-      {
-        "name": "Transaction",
-        "description": "Paths that handle operations on transactions such as income and expense"
+        "name": "Budget",
+        "description": "Paths that handle budget."
       },
       {
         "name": "Category",
         "description": "Paths that handle operations on categories."
       },
       {
-        "name": "Budget",
-        "description": "Paths that handle budget."
+        "name": "Operational",
+        "description": "Operational endpoints used to check the status of server"
+      },
+      {
+        "name": "Transaction",
+        "description": "Paths that handle operations on transactions such as income and expense"
       }
     ],
     "paths": {
