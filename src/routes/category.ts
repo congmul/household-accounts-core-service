@@ -19,7 +19,7 @@ const router = express.Router();
 
 // TODO: need to add middleware for authorization by access token. Only creator can delete it.
 router.post("/", validate(validCategory), createCategory);
-router.get("/:userId", validate(validGetCategory), getCategories);
+router.get("/:userId/user", validate(validGetCategory), getCategories);
 router.post(
   "/:categoryId/subcategory",
   validate(validSubCategory),
