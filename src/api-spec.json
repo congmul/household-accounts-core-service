@@ -226,32 +226,94 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas"
+                  "$ref": "#/components/schemas/createCategory"
                 }
               }
             }
           },
           "responses": {
+            "201": {
+              "description": "Create a category succcessfully."
+            },
+            "404": {
+              "description": "User not found."
+            },
             "default": {
               "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
             }
           }
-        },
+        }
+      },
+      "/category/{userId}/user": {
         "get": {
           "tags": [
             "Category"
           ],
           "operationId": "get-category",
           "summary": "View all categories by type, which you are apart of.",
-          "description": "View all categories by type, which you are apart of. You will get all categories you created."
-        },
+          "description": "View all categories by type, which you are apart of. You will get all categories you created.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/userId"
+            },
+            {
+              "$ref": "#/components/parameters/type"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Get a category succcessfuly.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/categories"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "User not found."
+            },
+            "default": {
+              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+            }
+          }
+        }
+      },
+      "/category/{categoryId}": {
         "patch": {
           "tags": [
             "Category"
           ],
           "operationId": "patch-category",
           "summary": "Update a specific category by id.",
-          "description": "Update a specific category by id."
+          "description": "Update a specific category by id.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/categoryId"
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createCategory",
+                  "required": []
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Update a category succcessfuly."
+            },
+            "404": {
+              "description": "Category not found."
+            },
+            "default": {
+              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+            }
+          }
         },
         "delete": {
           "tags": [
@@ -259,7 +321,23 @@
           ],
           "operationId": "delete-category",
           "summary": "Delete a specific category by id.",
-          "description": "Delete a specific category by id."
+          "description": "Delete a specific category by id.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/categoryId"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete a category succcessfuly."
+            },
+            "404": {
+              "description": "Category not found."
+            },
+            "default": {
+              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+            }
+          }
         }
       },
       "/category/{categoryId}/subcategory": {
@@ -270,16 +348,27 @@
           "operationId": "post-sub-category",
           "summary": "Create a subcategory of a specfic category.",
           "description": "Create a subcategory of a specfic category.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/categoryId"
+            }
+          ],
           "requestBody": {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas"
+                  "$ref": "#/components/schemas/createSubCategory"
                 }
               }
             }
           },
           "responses": {
+            "201": {
+              "description": "Create a subcategory succcessfully."
+            },
+            "404": {
+              "description": "User not found."
+            },
             "default": {
               "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
             }
@@ -308,7 +397,9 @@
               "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
             }
           }
-        },
+        }
+      },
+      "/budget/{userId}/user": {
         "get": {
           "tags": [
             "Budget"
@@ -316,7 +407,9 @@
           "operationId": "get-budget",
           "summary": "View all budget by the range of month",
           "description": "View all budget by the range of month, which you are a part of."
-        },
+        }
+      },
+      "/budget/{budgetId}": {
         "patch": {
           "tags": [
             "Budget"
@@ -349,6 +442,16 @@
         },
         "transactionId": {
           "name": "transactionId",
+          "description": "MongoDB ObjectId",
+          "in": "path",
+          "required": true,
+          "example": "66b023c3c49d3f879727a657",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "categoryId": {
+          "name": "categoryId",
           "description": "MongoDB ObjectId",
           "in": "path",
           "required": true,
@@ -446,7 +549,9 @@
         },
         "updateTransaction": {
           "$ref": "#/components/schemas/createTransaction",
-          "required": ["userId"]
+          "required": [
+            "userId"
+          ]
         },
         "transactions": {
           "type": "object",
@@ -506,6 +611,83 @@
               "type": "string"
             },
             "note": {
+              "type": "string"
+            }
+          }
+        },
+        "createCategory": {
+          "type": "object",
+          "required": [
+            "name",
+            "type"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "expense",
+                "income"
+              ]
+            },
+            "icon": {
+              "type": "string"
+            },
+            "color": {
+              "type": "string"
+            }
+          }
+        },
+        "createSubCategory": {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "icon": {
+              "type": "string"
+            },
+            "color": {
+              "type": "string"
+            }
+          }
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/category"
+          }
+        },
+        "category": {
+          "type": "object",
+          "required": [
+            "userId",
+            "name",
+            "type"
+          ],
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "expense",
+                "income"
+              ]
+            },
+            "icon": {
+              "type": "string"
+            },
+            "color": {
               "type": "string"
             }
           }
