@@ -162,7 +162,32 @@
           ],
           "operationId": "patch-transaction",
           "summary": "Update a specific transaction by id.",
-          "description": "Update a specific transaction by id."
+          "description": "Update a specific transaction by id.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/transactionId"
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateTransaction"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Update a transaction succcessfully."
+            },
+            "404": {
+              "description": "Transaction not found."
+            },
+            "default": {
+              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+            }
+          }
         },
         "delete": {
           "tags": [
@@ -170,7 +195,23 @@
           ],
           "operationId": "delete-transaction",
           "summary": "Delete a specific transaction by id.",
-          "description": "Delete a specific transaction by id."
+          "description": "Delete a specific transaction by id.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/transactionId"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete a transaction succcessfully."
+            },
+            "404": {
+              "description": "Transaction not found."
+            },
+            "default": {
+              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+            }
+          }
         }
       },
       "/category": {
@@ -298,7 +339,17 @@
       "parameters": {
         "userId": {
           "name": "userId",
-          "description": "This is the user id.",
+          "description": "MongoDB ObjectId",
+          "in": "path",
+          "required": true,
+          "example": "66b023c3c49d3f879727a657",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "transactionId": {
+          "name": "transactionId",
+          "description": "MongoDB ObjectId",
           "in": "path",
           "required": true,
           "example": "66b023c3c49d3f879727a657",
@@ -392,6 +443,10 @@
               "type": "string"
             }
           }
+        },
+        "updateTransaction": {
+          "$ref": "#/components/schemas/createTransaction",
+          "required": ["userId"]
         },
         "transactions": {
           "type": "object",
