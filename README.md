@@ -12,13 +12,10 @@ The main goal of the Household Accounts Core Service is to handle all data opera
 - [Configuration](#configuration)
 - [Usage](#usage)
 - [Endpoints](#endpoints)
-- [User Flows](#user-flows)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Installation
-
 
 1. Clone the repository:
    ```sh
@@ -39,8 +36,20 @@ The main goal of the Household Accounts Core Service is to handle all data opera
     ```
 
 ## Configuration
+It needs to set env like the following examples.
+```
+PORT=3001
+MONGO_URI=mongodb://localhost:27017
+MONGO_DB_NAME=household-accounts-core-service
+USER_SERVICE_URL=http://localhost:3002
+```
 
 ## Usage
+To run the app
+```bash
+npm start
+```
+This will start the application on 'http://localhost:3002'
 
 ## Endpoints
 [API Specification](https://household-accounts-core-service.azurewebsites.net/api-spec)
@@ -93,5 +102,12 @@ household-accounts-core-service/
 ```
 
 ## Contributing
-
-## License
+1. Fort the repository.
+2. Create a new branch: `git checkout -b feature/your-feautre-name` on `development` branch.
+3. Whatever work you do, after it has been tested locally by hand and unit/integration tests, you will bump the major, minor, or patch versions of package.json file based on the scope of work completed. Rule of thumb is:
+ - Breaking changes = bump major version
+ - Additional feature(s) with no breaking changes = bump minor version
+ - Chore or bug fix = bump patch version
+4. Make your changes an commit them: `git commit -m 'Add some feature'`
+5. Push to the branch: `git push origin feature/your-feature-name`
+6. Open a pull request.
