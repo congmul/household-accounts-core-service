@@ -387,12 +387,18 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas"
+                  "$ref": "#/components/schemas/createBudget"
                 }
               }
             }
           },
           "responses": {
+            "201": {
+              "description": "Create a budget succcessfully."
+            },
+            "404": {
+              "description": "User not found."
+            },
             "default": {
               "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
             }
@@ -406,7 +412,36 @@
           ],
           "operationId": "get-budget",
           "summary": "View all budget by the range of month",
-          "description": "View all budget by the range of month, which you are a part of."
+          "description": "View all budget by the range of month, which you are a part of.",
+           "parameters": [
+            {
+              "$ref": "#/components/parameters/userId"
+            },
+            {
+              "$ref": "#/components/parameters/year"
+            },
+            {
+              "$ref": "#/components/parameters/month"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Get a budget succcessfully.",
+               "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/budgets"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "User not found."
+            },
+            "default": {
+              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+            }
+          }
         }
       },
       "/budget/{budgetId}": {
@@ -416,7 +451,32 @@
           ],
           "operationId": "patch-budget",
           "summary": "Update a specific budget by id.",
-          "description": "Update a specific budget by id."
+          "description": "Update a specific budget by id.",
+           "parameters": [
+            {
+              "$ref": "#/components/parameters/budgetId"
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateBudget"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Update a budget succcessfully."
+            },
+            "404": {
+              "description": "Budget not found."
+            },
+            "default": {
+              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+            }
+          }
         },
         "delete": {
           "tags": [
@@ -424,7 +484,23 @@
           ],
           "operationId": "delete-budget",
           "summary": "Delete a specific budget by id.",
-          "description": "Delete a specific budget by id."
+          "description": "Delete a specific budget by id.",
+           "parameters": [
+            {
+              "$ref": "#/components/parameters/budgetId"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete a budget succcessfuly."
+            },
+            "404": {
+              "description": "Budget not found."
+            },
+            "default": {
+              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+            }
+          }
         }
       }
     },
@@ -452,6 +528,16 @@
         },
         "categoryId": {
           "name": "categoryId",
+          "description": "MongoDB ObjectId",
+          "in": "path",
+          "required": true,
+          "example": "66b023c3c49d3f879727a657",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "budgetId": {
+          "name": "budgetId",
           "description": "MongoDB ObjectId",
           "in": "path",
           "required": true,
@@ -688,6 +774,80 @@
               "type": "string"
             },
             "color": {
+              "type": "string"
+            }
+          }
+        },
+        "createBudget": {
+          "type": "object",
+          "required": [
+            "userId",
+            "date",
+            "amount",
+            "category"
+          ],
+          "properties": {
+            "userId": {
+              "type": "string"
+            },
+            "date": {
+              "type": "string"
+            },
+            "amount": {
+              "type": "number"
+            },
+            "category": {
+              "type": "string"
+            }
+          }
+        },
+        "updateBudget": {
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "number"
+            },
+            "category": {
+              "type": "string"
+            }
+          }
+        },
+        "budgets": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "totalAmount": {
+                    "type": "string"
+                },
+                "bdugets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/budget"
+                    }
+                }
+            }
+        },
+        "budget":{
+          "type": "object",
+          "required": [
+            "_id",
+            "amount",
+            "category",
+            "date"
+          ],
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "amount": {
+              "type": "number"
+            },
+            "category": {
+              "type": "string"
+            },
+            "date": {
               "type": "string"
             }
           }
