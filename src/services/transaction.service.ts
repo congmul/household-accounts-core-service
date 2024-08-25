@@ -30,6 +30,7 @@ export const transactionService = {
     groupBy: string,
   ) => {
     try {
+      logger.info("getExpenses");
       const startDate = new Date(year, month - 1, 1, -7);
       const endDate = new Date(year, month, 1, -7);
       let group: any;
@@ -45,7 +46,7 @@ export const transactionService = {
         {
           $match: {
             userId: userId,
-            type: { $ne: "income" },
+            type: { $eq: "expense" },
             date: {
               $gte: startDate,
               $lt: endDate,
@@ -78,6 +79,7 @@ export const transactionService = {
     groupBy: string,
   ) => {
     try {
+      logger.info("getIncomes");
       const startDate = new Date(year, month - 1, 1);
       const endDate = new Date(year, month, 1);
       if (groupBy && groupBy === "date") {
@@ -85,7 +87,7 @@ export const transactionService = {
           {
             $match: {
               userId: userId,
-              type: { $ne: "expense" },
+              type: { $eq: "income" },
               date: {
                 $gte: startDate,
                 $lt: endDate,
@@ -111,7 +113,68 @@ export const transactionService = {
           {
             $match: {
               userId: userId,
-              type: { $ne: "expense" },
+              type: { $eq: "income" },
+              date: {
+                $gte: startDate,
+                $lt: endDate,
+              },
+            },
+          },
+          {
+            $sort: {
+              date: 1, // Sort by the _id field which contains the formatted date string
+            },
+          },
+        ]);
+        return result;
+      }
+    } catch (err) {
+      logger.error(err);
+      throw new AppError(ErrorMsg.getDbError("transaction").message, 500);
+    }
+  },
+  getInvestments: async (
+    userId: string,
+    year: number,
+    month: number,
+    groupBy: string,
+  ) => {
+    try {
+      logger.info("getInvestments");
+      const startDate = new Date(year, month - 1, 1);
+      const endDate = new Date(year, month, 1);
+      if (groupBy && groupBy === "date") {
+        const result = await Transaction.aggregate([
+          {
+            $match: {
+              userId: userId,
+              type: { $eq: "investment" },
+              date: {
+                $gte: startDate,
+                $lt: endDate,
+              },
+            },
+          },
+          {
+            $group: {
+              _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+              transactions: { $push: "$$ROOT" },
+              totalAmount: { $sum: "$amount" },
+            },
+          },
+          {
+            $sort: {
+              _id: 1, // Sort by the _id field which contains the formatted date string
+            },
+          },
+        ]);
+        return result;
+      } else {
+        const result = await Transaction.aggregate([
+          {
+            $match: {
+              userId: userId,
+              type: { $eq: "investment" },
               date: {
                 $gte: startDate,
                 $lt: endDate,

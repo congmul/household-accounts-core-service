@@ -36,9 +36,16 @@ export const getTransactions = async (req: Request, res: Response) => {
         parseInt(month as string),
         groupBy as string,
       );
-    } else {
+    } else if (type === "income") {
       // income
       result = await transactionService.getIncomes(
+        userId,
+        parseInt(year as string),
+        parseInt(month as string),
+        groupBy as string,
+      );
+    } else if (type === "investment") {
+      result = await transactionService.getInvestments(
         userId,
         parseInt(year as string),
         parseInt(month as string),
