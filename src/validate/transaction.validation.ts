@@ -14,6 +14,7 @@ export const validTransaction = {
     subcategory: Joi.string(),
     note: Joi.string(),
     fixedExpenseMonthly: Joi.boolean().default(false),
+    endDate: Joi.date().format("YYYY-MM-DD").optional(),
     paymentMethod: Joi.string().default("Credit Card"),
   }),
 };
@@ -51,6 +52,8 @@ export const validPatchTransaction = {
     subcategory: Joi.string(),
     note: Joi.string(),
     fixedExpenseMonthly: Joi.boolean(),
+    fixedSeriesId: Joi.string().optional(),
+    endDate: Joi.date().format("YYYY-MM-DD").optional(),
     paymentMethod: Joi.string().valid("Credit Card", "Cash"),
   }),
 };
