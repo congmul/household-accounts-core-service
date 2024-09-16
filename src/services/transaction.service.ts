@@ -3,12 +3,38 @@ import logger from "../utils/logger";
 import { ErrorMsg } from "../config/msgs";
 import { ITransactionCreatePayload, ITransactionUpdatePayload } from "../types";
 import AppError from "../utils/errorHandler";
+import { addMonths } from "../utils/helper";
+import { v4 as uuidv4 } from "uuid";
 
 export const transactionService = {
   createTransaction: async (payload: ITransactionCreatePayload) => {
     try {
-      const result = await Transaction.create(payload);
-      return result;
+      // If type === "expense" && fixedExpenseMonthly === true
+      // then need to create repeated expenses until the end date with fixedSeriesId (UUID)
+      if (payload.type === "expense" && payload.fixedExpenseMonthly) {
+        // Generate a unique series ID
+        const fixedSeriesId = uuidv4();
+        let startDate = new Date(payload.date);
+        // if there is no endDate, it will be after 12months
+        const endDate = payload.endDate
+          ? new Date(payload.endDate)
+          : addMonths(startDate, 12);
+        const fixedExpenses: ITransactionCreatePayload[] = [];
+        while (startDate <= endDate) {
+          const createNewPayload = {
+            ...payload,
+            date: startDate,
+            fixedSeriesId,
+          };
+          fixedExpenses.push(createNewPayload);
+          startDate = addMonths(startDate, 1);
+        }
+        const result = await Transaction.insertMany(fixedExpenses);
+        return result;
+      } else {
+        const result = await Transaction.create(payload);
+        return result;
+      }
     } catch (err) {
       logger.error(err);
       throw new AppError(ErrorMsg.createDbError("transaction").message, 500);

@@ -42,6 +42,19 @@ const transactionSchema = new Schema<ITransaction>({
     type: Boolean,
     default: false,
   },
+  fixedSeriesId: {
+    type: String,
+  },
+  endDate: {
+    type: Date,
+    set: (value: Date | string) => {
+      // Ensure value is a Date object
+      const date = new Date(value);
+      // Set time to 00:00:00
+      date.setUTCHours(0, 0, 0, 0);
+      return date;
+    },
+  },
   createdAt: {
     type: Date,
     default: Date.now,
