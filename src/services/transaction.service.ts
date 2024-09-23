@@ -247,4 +247,38 @@ export const transactionService = {
       throw new AppError(ErrorMsg.deleteDbError("transaction").message, 500);
     }
   },
+  deleteAllFixedExpensesAfterDate: async (
+    fixedSeriesId: string,
+    afterDate: Date,
+  ) => {
+    try {
+      const result = await Transaction.deleteMany({
+        fixedSeriesId,
+        date: { $gte: afterDate },
+      });
+      return result;
+    } catch (err) {
+      logger.error(err);
+      throw new AppError(
+        ErrorMsg.deleteDbError(
+          "all fixedExpense after a specific date",
+        ).message,
+        500,
+      );
+    }
+  },
+  deleteAllFixedExpenses: async (fixedSeriesId: string) => {
+    try {
+      const result = await Transaction.deleteMany({
+        fixedSeriesId,
+      });
+      return result;
+    } catch (err) {
+      logger.error(err);
+      throw new AppError(
+        ErrorMsg.deleteDbError("all fixedExpense").message,
+        500,
+      );
+    }
+  },
 };

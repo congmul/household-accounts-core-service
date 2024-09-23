@@ -3,6 +3,7 @@ export {
   getTransactions,
   patchTransaction,
   deleteTransaction,
+  deleteFixedExpense,
 } from "./transaction.controller";
 
 export {

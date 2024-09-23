@@ -5,12 +5,14 @@ import {
   validGetTransaction,
   validPatchTransaction,
   validDeleteTransaction,
+  validDeleteFixedExpense,
 } from "../validate";
 import {
   createTransaction,
   getTransactions,
   patchTransaction,
   deleteTransaction,
+  deleteFixedExpense,
 } from "../controllers";
 
 const router = express.Router();
@@ -28,6 +30,11 @@ router.delete(
   "/:transactionId",
   validate(validDeleteTransaction),
   deleteTransaction,
+);
+router.delete(
+  "/fixedExpense/:transactionId/:fixedSeriesId",
+  validate(validDeleteFixedExpense),
+  deleteFixedExpense,
 );
 
 export default router;

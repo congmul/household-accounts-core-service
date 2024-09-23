@@ -72,6 +72,9 @@ export const patchTransaction = async (req: Request, res: Response) => {
         .send({ ...ErrorMsg.notFound("Transaction"), transactionId });
     }
 
+    // TODO: If it is expense && turn off fixedExpenseMonthly,
+    // Grab fixedSeriesId
+    // then need to remove all future expenses
     await transactionService.updateTransaction(transactionId, req.body);
 
     res.status(200).send(SuccessMsg.update("Transcation"));
@@ -92,6 +95,48 @@ export const deleteTransaction = async (req: Request, res: Response) => {
     }
     await transactionService.deleteTransaction(transactionId);
     res.status(200).send(SuccessMsg.delete("Transcation"));
+  } catch (err) {
+    logger.error(err);
+    res.status(500).send(err);
+  }
+};
+export const deleteFixedExpense = async (req: Request, res: Response) => {
+  try {
+    const { transactionId, fixedSeriesId } = req.params;
+    const { action } = req.query;
+    // Check if the transaction exists
+    const transaction = await transactionService.getTransaction(transactionId);
+    if (!transaction) {
+      return res
+        .status(404)
+        .send({ ...ErrorMsg.notFound("Transaction"), transactionId });
+    }
+    if (transaction.fixedSeriesId !== fixedSeriesId) {
+      return res
+        .status(404)
+        .send({ ...ErrorMsg.notFound("Fixed Expenses"), fixedSeriesId });
+    }
+
+    /**
+     * Check if is in fixedExpenseMonthly and has fixedSeriesId
+     * Then it needs options to delete the transaction("expenses")
+     * options (action = 'only_one', 'following', 'all')
+     *  1. Delete one of the series expenses
+     *  2. Delete all of the future expenses from transaction.date
+     *  3. Delete all that has the same series Id
+     */
+    if (action === "only_one") {
+      await transactionService.deleteTransaction(transactionId);
+    } else if (action === "following") {
+      await transactionService.deleteAllFixedExpensesAfterDate(
+        fixedSeriesId,
+        transaction.date,
+      );
+    } else {
+      // all
+      await transactionService.deleteAllFixedExpenses(fixedSeriesId);
+    }
+    res.status(200).send(SuccessMsg.delete("Fixed Expense"));
   } catch (err) {
     logger.error(err);
     res.status(500).send(err);
