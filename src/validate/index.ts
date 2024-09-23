@@ -4,6 +4,7 @@ export {
   validGetTransaction,
   validPatchTransaction,
   validDeleteTransaction,
+  validDeleteFixedExpense,
 } from "./transaction.validation";
 export {
   validCategory,
