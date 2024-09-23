@@ -62,3 +62,14 @@ export const validDeleteTransaction = {
     transactionId: Joi.string().custom(validObjectId).required(),
   }),
 };
+export const validDeleteFixedExpense = {
+  params: Joi.object().keys({
+    transactionId: Joi.string().custom(validObjectId).required(),
+    fixedSeriesId: Joi.string().required(),
+  }),
+  query: Joi.object().keys({
+    action: Joi.string()
+      .valid("all", "following", "only_one")
+      .default("only_one"),
+  }),
+};
