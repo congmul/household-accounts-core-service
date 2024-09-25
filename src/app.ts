@@ -26,6 +26,7 @@ app.use("/budget", budgetRoute);
 app.get("/health", (req: Request, res: Response) => {
   res.send({
     msg: "Household Accounts Core Service is healthy and ready to handle your requests.",
+    app_version: process.env.npm_package_version,
   });
 });
 
