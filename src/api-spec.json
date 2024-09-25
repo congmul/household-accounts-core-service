@@ -1,862 +1,921 @@
 {
-    "openapi": "3.1.0",
-    "info": {
-      "title": "Household Accounts Core Service",
-      "version": "0.0.1",
-      "description": "The main goal of the Household Accounts Core Service is to handle all data operations for creating, reading, updating, and deleting records. This service is responsible for CRUD operations on Transactions, Categories, and Budgets.",
-      "contact": {
-        "name": "Jehyun Jung",
-        "email": "jehyunjung@gmail.com",
-        "url": "https://congmul.github.io/jehyunjung/"
-      },
-      "license": {
-        "name": "MIT",
-        "url": "https://www.mit.edu/~amini/LICENSE.md"
-      }
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Household Accounts Core Service",
+    "version": "0.0.1",
+    "description": "The main goal of the Household Accounts Core Service is to handle all data operations for creating, reading, updating, and deleting records. This service is responsible for CRUD operations on Transactions, Categories, and Budgets.",
+    "contact": {
+      "name": "Jehyun Jung",
+      "email": "jehyunjung@gmail.com",
+      "url": "https://congmul.github.io/jehyunjung/"
     },
-    "servers": [
-      {
-        "url": "http://localhost:3001",
-        "description": "local url"
-      },
-      {
-        "url": "http://household-accounts-core-service.azurewebsites.net",
-        "description": "Development env"
-      }
-    ],
-    "tags": [
-      {
-        "name": "Budget",
-        "description": "Paths that handle budget."
-      },
-      {
-        "name": "Category",
-        "description": "Paths that handle operations on categories."
-      },
-      {
-        "name": "Operational",
-        "description": "Operational endpoints used to check the status of server"
-      },
-      {
-        "name": "Transaction",
-        "description": "Paths that handle operations on transactions such as income and expense"
-      }
-    ],
-    "paths": {
-      "/health": {
-        "get": {
-          "tags": [
-            "Operational"
-          ],
-          "operationId": "get-health",
-          "summary": "Checks the operational status of the API",
-          "description": "Checks the operational status of the API",
-          "responses": {
-            "200": {
-              "description": "Household accounts core service is healthy and ready to handle your requests.",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "description": "health endpoint response",
-                    "required": [
-                      "msg"
-                    ],
-                    "properties": {
-                      "msg": {
-                        "type": "string",
-                        "example": "Household accounts core service is healthy and ready to handle your requests."
-                      }
-                    }
-                  },
-                  "examples": {
-                    "success": {
-                      "value": {
-                        "msg": "Household accounts core service is healthy and ready to handle your requests."
-                      }
+    "license": {
+      "name": "MIT",
+      "url": "https://www.mit.edu/~amini/LICENSE.md"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001",
+      "description": "local url"
+    },
+    {
+      "url": "http://household-accounts-core-service.azurewebsites.net",
+      "description": "Development env"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Budget",
+      "description": "Paths that handle budget."
+    },
+    {
+      "name": "Category",
+      "description": "Paths that handle operations on categories."
+    },
+    {
+      "name": "Operational",
+      "description": "Operational endpoints used to check the status of server"
+    },
+    {
+      "name": "Transaction",
+      "description": "Paths that handle operations on transactions such as income and expense"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Operational"
+        ],
+        "operationId": "get-health",
+        "summary": "Checks the operational status of the API",
+        "description": "Checks the operational status of the API",
+        "responses": {
+          "200": {
+            "description": "Household accounts core service is healthy and ready to handle your requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "health endpoint response",
+                  "required": [
+                    "msg"
+                  ],
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "example": "Household accounts core service is healthy and ready to handle your requests."
                     }
                   }
-                }
-              }
-            },
-            "default": {
-              "description": "API unavailable"
-            }
-          }
-        }
-      },
-      "/transaction": {
-        "post": {
-          "tags": [
-            "Transaction"
-          ],
-          "operationId": "post-transaction",
-          "summary": "Create a transaction with their type.",
-          "description": "Create a transaction with their type. There are three types of transaction, 'income' and 'expense'",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/createTransaction"
-                }
-              }
-            }
-          },
-          "responses": {
-            "201": {
-              "description": "Create a transaction succcessfuly."
-            },
-            "404": {
-              "description": "User not found."
-            },
-            "default": {
-              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
-            }
-          }
-        }
-      },
-      "/transaction/{userId}/user": {
-        "get": {
-          "tags": [
-            "Transaction"
-          ],
-          "operationId": "get-transaction",
-          "summary": "View all transactions by the range of month.",
-          "description": "View all transactions by the range of month, which you are apart of.",
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/userId"
-            },
-            {
-              "$ref": "#/components/parameters/type"
-            },
-            {
-              "$ref": "#/components/parameters/year"
-            },
-            {
-              "$ref": "#/components/parameters/month"
-            },
-            {
-              "$ref": "#/components/parameters/groupBy"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Create a transaction succcessfuly.",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/transactions"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "msg": "Household accounts core service is healthy and ready to handle your requests."
+                    }
                   }
                 }
               }
-            },
-            "404": {
-              "description": "User not found."
-            },
-            "default": {
-              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
-            }
-          }
-        }
-      },
-      "/transaction/{transactionId}": {
-        "patch": {
-          "tags": [
-            "Transaction"
-          ],
-          "operationId": "patch-transaction",
-          "summary": "Update a specific transaction by id.",
-          "description": "Update a specific transaction by id.",
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/transactionId"
-            }
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/updateTransaction"
-                }
-              }
             }
           },
-          "responses": {
-            "200": {
-              "description": "Update a transaction succcessfully."
-            },
-            "404": {
-              "description": "Transaction not found."
-            },
-            "default": {
-              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
-            }
-          }
-        },
-        "delete": {
-          "tags": [
-            "Transaction"
-          ],
-          "operationId": "delete-transaction",
-          "summary": "Delete a specific transaction by id.",
-          "description": "Delete a specific transaction by id.",
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/transactionId"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Delete a transaction succcessfully."
-            },
-            "404": {
-              "description": "Transaction not found."
-            },
-            "default": {
-              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
-            }
-          }
-        }
-      },
-      "/category": {
-        "post": {
-          "tags": [
-            "Category"
-          ],
-          "operationId": "post-category",
-          "summary": "Create a category with their type.",
-          "description": "Create a category with their type. There are three types of category, 'income' and 'expense'",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/createCategory"
-                }
-              }
-            }
-          },
-          "responses": {
-            "201": {
-              "description": "Create a category succcessfully."
-            },
-            "404": {
-              "description": "User not found."
-            },
-            "default": {
-              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
-            }
-          }
-        }
-      },
-      "/category/{userId}/user": {
-        "get": {
-          "tags": [
-            "Category"
-          ],
-          "operationId": "get-category",
-          "summary": "View all categories by type, which you are apart of.",
-          "description": "View all categories by type, which you are apart of. You will get all categories you created.",
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/userId"
-            },
-            {
-              "$ref": "#/components/parameters/type"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Get a category succcessfuly.",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/categories"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "User not found."
-            },
-            "default": {
-              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
-            }
-          }
-        }
-      },
-      "/category/{categoryId}": {
-        "patch": {
-          "tags": [
-            "Category"
-          ],
-          "operationId": "patch-category",
-          "summary": "Update a specific category by id.",
-          "description": "Update a specific category by id.",
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/categoryId"
-            }
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/createCategory",
-                  "required": []
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Update a category succcessfuly."
-            },
-            "404": {
-              "description": "Category not found."
-            },
-            "default": {
-              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
-            }
-          }
-        },
-        "delete": {
-          "tags": [
-            "Category"
-          ],
-          "operationId": "delete-category",
-          "summary": "Delete a specific category by id.",
-          "description": "Delete a specific category by id.",
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/categoryId"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Delete a category succcessfuly."
-            },
-            "404": {
-              "description": "Category not found."
-            },
-            "default": {
-              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
-            }
-          }
-        }
-      },
-      "/category/{categoryId}/subcategory": {
-        "post": {
-          "tags": [
-            "Category"
-          ],
-          "operationId": "post-sub-category",
-          "summary": "Create a subcategory of a specfic category.",
-          "description": "Create a subcategory of a specfic category.",
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/categoryId"
-            }
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/createSubCategory"
-                }
-              }
-            }
-          },
-          "responses": {
-            "201": {
-              "description": "Create a subcategory succcessfully."
-            },
-            "404": {
-              "description": "User not found."
-            },
-            "default": {
-              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
-            }
-          }
-        }
-      },
-      "/budget": {
-        "post": {
-          "tags": [
-            "Budget"
-          ],
-          "operationId": "post-budget",
-          "summary": "Create a budget.",
-          "description": "Create a budget. There are three identifiers, 'userId', 'date', and 'category'",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/createBudget"
-                }
-              }
-            }
-          },
-          "responses": {
-            "201": {
-              "description": "Create a budget succcessfully."
-            },
-            "404": {
-              "description": "User not found."
-            },
-            "default": {
-              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
-            }
-          }
-        }
-      },
-      "/budget/{userId}/user": {
-        "get": {
-          "tags": [
-            "Budget"
-          ],
-          "operationId": "get-budget",
-          "summary": "View all budget by the range of month",
-          "description": "View all budget by the range of month, which you are a part of.",
-           "parameters": [
-            {
-              "$ref": "#/components/parameters/userId"
-            },
-            {
-              "$ref": "#/components/parameters/year"
-            },
-            {
-              "$ref": "#/components/parameters/month"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Get a budget succcessfully.",
-               "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/budgets"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "User not found."
-            },
-            "default": {
-              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
-            }
-          }
-        }
-      },
-      "/budget/{budgetId}": {
-        "patch": {
-          "tags": [
-            "Budget"
-          ],
-          "operationId": "patch-budget",
-          "summary": "Update a specific budget by id.",
-          "description": "Update a specific budget by id.",
-           "parameters": [
-            {
-              "$ref": "#/components/parameters/budgetId"
-            }
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/updateBudget"
-                }
-              }
-            }
-          },
-          "responses": {
-            "201": {
-              "description": "Update a budget succcessfully."
-            },
-            "404": {
-              "description": "Budget not found."
-            },
-            "default": {
-              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
-            }
-          }
-        },
-        "delete": {
-          "tags": [
-            "Budget"
-          ],
-          "operationId": "delete-budget",
-          "summary": "Delete a specific budget by id.",
-          "description": "Delete a specific budget by id.",
-           "parameters": [
-            {
-              "$ref": "#/components/parameters/budgetId"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Delete a budget succcessfuly."
-            },
-            "404": {
-              "description": "Budget not found."
-            },
-            "default": {
-              "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
-            }
+          "default": {
+            "description": "API unavailable"
           }
         }
       }
     },
-    "components": {
-      "parameters": {
-        "userId": {
-          "name": "userId",
-          "description": "MongoDB ObjectId",
-          "in": "path",
-          "required": true,
-          "example": "66b023c3c49d3f879727a657",
-          "schema": {
-            "type": "string"
-          }
-        },
-        "transactionId": {
-          "name": "transactionId",
-          "description": "MongoDB ObjectId",
-          "in": "path",
-          "required": true,
-          "example": "66b023c3c49d3f879727a657",
-          "schema": {
-            "type": "string"
-          }
-        },
-        "categoryId": {
-          "name": "categoryId",
-          "description": "MongoDB ObjectId",
-          "in": "path",
-          "required": true,
-          "example": "66b023c3c49d3f879727a657",
-          "schema": {
-            "type": "string"
-          }
-        },
-        "budgetId": {
-          "name": "budgetId",
-          "description": "MongoDB ObjectId",
-          "in": "path",
-          "required": true,
-          "example": "66b023c3c49d3f879727a657",
-          "schema": {
-            "type": "string"
-          }
-        },
-        "type": {
-          "name": "type",
-          "description": "This is a selected type.",
-          "in": "query",
-          "required": true,
-          "example": "expense",
-          "schema": {
-            "type": "string"
-          }
-        },
-        "groupBy": {
-          "name": "groupBy",
-          "description": "This is a selected groupBy.",
-          "in": "query",
-          "required": false,
-          "example": "date",
-          "schema": {
-            "type": "string"
-          }
-        },
-        "year": {
-          "name": "year",
-          "description": "This is a selected year.",
-          "in": "query",
-          "required": true,
-          "example": "2024",
-          "schema": {
-            "type": "string"
-          }
-        },
-        "month": {
-          "name": "month",
-          "description": "This is a selected month.",
-          "in": "query",
-          "required": true,
-          "example": "09",
-          "schema": {
-            "type": "string"
-          }
-        }
-      },
-      "schemas": {
-        "createTransaction": {
-          "type": "object",
-          "required": [
-            "userId",
-            "date",
-            "type",
-            "amount"
-          ],
-          "properties": {
-            "userId": {
-              "type": "string",
-              "example": "66b023c3c49d3f879727a657"
-            },
-            "date": {
-              "type": "string",
-              "example": "2024-07-01"
-            },
-            "type": {
-              "type": "string",
-              "enum": [
-                "income",
-                "expense"
-              ]
-            },
-            "amount": {
-              "type": "number",
-              "example": 328.25
-            },
-            "category": {
-              "type": "string"
-            },
-            "subcategory": {
-              "type": "string"
-            },
-            "note": {
-              "type": "string"
-            },
-            "fixedExpenseMonthly": {
-              "type": "boolean"
-            },
-            "paymentMethod": {
-              "type": "string"
-            }
-          }
-        },
-        "updateTransaction": {
-          "$ref": "#/components/schemas/createTransaction",
-          "required": [
-            "userId"
-          ]
-        },
-        "transactions": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string",
-              "example": "2024-09-01"
-            },
-            "totalAmount": {
-              "type": "number",
-              "example": 8572.25
-            },
-            "transactions": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/transactionItems"
+    "/transaction": {
+      "post": {
+        "tags": [
+          "Transaction"
+        ],
+        "operationId": "post-transaction",
+        "summary": "Create a transaction with their type.",
+        "description": "Create a transaction with their type. There are three types of transaction, 'income' and 'expense'",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createTransaction"
               }
             }
           }
         },
-        "transactionItems": {
-          "type": "object",
-          "required": [
-            "_id",
-            "userId",
-            "date",
-            "type",
-            "amount",
-            "category"
-          ],
-          "properties": {
-            "_id": {
-              "type": "string",
-              "description": "ObjectId"
-            },
-            "userId": {
-              "type": "string",
-              "description": "ObjectId"
-            },
-            "date": {
-              "type": "string"
-            },
-            "type": {
-              "type": "string",
-              "enum": [
-                "income",
-                "expense"
-              ]
-            },
-            "amount": {
-              "type": "number"
-            },
-            "category": {
-              "type": "string"
-            },
-            "subcategory": {
-              "type": "string"
-            },
-            "note": {
-              "type": "string"
-            }
+        "responses": {
+          "201": {
+            "description": "Create a transaction succcessfuly."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "default": {
+            "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
           }
-        },
-        "createCategory": {
-          "type": "object",
-          "required": [
-            "name",
-            "type"
-          ],
-          "properties": {
-            "name": {
-              "type": "string"
-            },
-            "type": {
-              "type": "string",
-              "enum": [
-                "expense",
-                "income"
-              ]
-            },
-            "icon": {
-              "type": "string"
-            },
-            "color": {
-              "type": "string"
-            }
+        }
+      }
+    },
+    "/transaction/{userId}/user": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "operationId": "get-transaction",
+        "summary": "View all transactions by the range of month.",
+        "description": "View all transactions by the range of month, which you are apart of.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          },
+          {
+            "$ref": "#/components/parameters/type"
+          },
+          {
+            "$ref": "#/components/parameters/year"
+          },
+          {
+            "$ref": "#/components/parameters/month"
+          },
+          {
+            "$ref": "#/components/parameters/groupBy"
           }
-        },
-        "createSubCategory": {
-          "type": "object",
-          "required": [
-            "name"
-          ],
-          "properties": {
-            "name": {
-              "type": "string"
-            },
-            "icon": {
-              "type": "string"
-            },
-            "color": {
-              "type": "string"
-            }
-          }
-        },
-        "categories": {
-          "type": "array",
-          "items": {
-            "$ref": "#/components/schemas/category"
-          }
-        },
-        "category": {
-          "type": "object",
-          "required": [
-            "userId",
-            "name",
-            "type"
-          ],
-          "properties": {
-            "_id": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            },
-            "type": {
-              "type": "string",
-              "enum": [
-                "expense",
-                "income"
-              ]
-            },
-            "icon": {
-              "type": "string"
-            },
-            "color": {
-              "type": "string"
-            }
-          }
-        },
-        "createBudget": {
-          "type": "object",
-          "required": [
-            "userId",
-            "date",
-            "amount",
-            "category"
-          ],
-          "properties": {
-            "userId": {
-              "type": "string"
-            },
-            "date": {
-              "type": "string"
-            },
-            "amount": {
-              "type": "number"
-            },
-            "category": {
-              "type": "string"
-            }
-          }
-        },
-        "updateBudget": {
-          "type": "object",
-          "properties": {
-            "amount": {
-              "type": "number"
-            },
-            "category": {
-              "type": "string"
-            }
-          }
-        },
-        "budgets": {
-            "type": "object",
-            "properties": {
-                "_id": {
-                    "type": "string"
-                },
-                "totalAmount": {
-                    "type": "string"
-                },
-                "bdugets": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/components/schemas/budget"
-                    }
+        ],
+        "responses": {
+          "200": {
+            "description": "Create a transaction succcessfuly.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/transactions"
                 }
+              }
             }
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "default": {
+            "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+          }
+        }
+      }
+    },
+    "/transaction/{transactionId}": {
+      "patch": {
+        "tags": [
+          "Transaction"
+        ],
+        "operationId": "patch-transaction",
+        "summary": "Update a specific transaction by id.",
+        "description": "Update a specific transaction by id.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/transactionId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateTransaction"
+              }
+            }
+          }
         },
-        "budget":{
-          "type": "object",
-          "required": [
-            "_id",
-            "amount",
-            "category",
-            "date"
-          ],
-          "properties": {
-            "_id": {
-              "type": "string"
-            },
-            "amount": {
-              "type": "number"
-            },
-            "category": {
-              "type": "string"
-            },
-            "date": {
-              "type": "string"
+        "responses": {
+          "200": {
+            "description": "Update a transaction succcessfully."
+          },
+          "404": {
+            "description": "Transaction not found."
+          },
+          "default": {
+            "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Transaction"
+        ],
+        "operationId": "delete-transaction",
+        "summary": "Delete a specific transaction by id.",
+        "description": "Delete a specific transaction by id.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/transactionId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete a transaction succcessfully."
+          },
+          "404": {
+            "description": "Transaction not found."
+          },
+          "default": {
+            "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+          }
+        }
+      }
+    },
+    "/transaction/fixedExpense/{transactionId}/{fixedSeriesId}":{
+      "delete": {
+        "tags": [
+          "Transaction"
+        ],
+        "operationId": "delete-fixedExpense",
+        "summary": "Delete a specific fixed expense or expenses by fixedSeriesId.",
+        "description": "Delete a specific fixed expense or expenses by fixedSeriesId. There are three options, 'only_one', 'following', and 'all'. following means it will delete current expense and future fixed expenses.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/transactionId"
+          },
+          {
+            "$ref": "#/components/parameters/fixedSeriesId"
+          },
+          {
+            "$ref": "#/components/parameters/action"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete a fixed expense succcessfully."
+          },
+          "404": {
+            "description": "Transaction not found."
+          },
+          "default": {
+            "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+          }
+        }
+      }
+    },
+    "/category": {
+      "post": {
+        "tags": [
+          "Category"
+        ],
+        "operationId": "post-category",
+        "summary": "Create a category with their type.",
+        "description": "Create a category with their type. There are three types of category, 'income' and 'expense'",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createCategory"
+              }
             }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create a category succcessfully."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "default": {
+            "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+          }
+        }
+      }
+    },
+    "/category/{userId}/user": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "operationId": "get-category",
+        "summary": "View all categories by type, which you are apart of.",
+        "description": "View all categories by type, which you are apart of. You will get all categories you created.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          },
+          {
+            "$ref": "#/components/parameters/type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get a category succcessfuly.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/categories"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "default": {
+            "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+          }
+        }
+      }
+    },
+    "/category/{categoryId}": {
+      "patch": {
+        "tags": [
+          "Category"
+        ],
+        "operationId": "patch-category",
+        "summary": "Update a specific category by id.",
+        "description": "Update a specific category by id.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/categoryId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createCategory",
+                "required": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update a category succcessfuly."
+          },
+          "404": {
+            "description": "Category not found."
+          },
+          "default": {
+            "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Category"
+        ],
+        "operationId": "delete-category",
+        "summary": "Delete a specific category by id.",
+        "description": "Delete a specific category by id.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/categoryId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete a category succcessfuly."
+          },
+          "404": {
+            "description": "Category not found."
+          },
+          "default": {
+            "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+          }
+        }
+      }
+    },
+    "/category/{categoryId}/subcategory": {
+      "post": {
+        "tags": [
+          "Category"
+        ],
+        "operationId": "post-sub-category",
+        "summary": "Create a subcategory of a specfic category.",
+        "description": "Create a subcategory of a specfic category.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/categoryId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createSubCategory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create a subcategory succcessfully."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "default": {
+            "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+          }
+        }
+      }
+    },
+    "/budget": {
+      "post": {
+        "tags": [
+          "Budget"
+        ],
+        "operationId": "post-budget",
+        "summary": "Create a budget.",
+        "description": "Create a budget. There are three identifiers, 'userId', 'date', and 'category'",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createBudget"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create a budget succcessfully."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "default": {
+            "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+          }
+        }
+      }
+    },
+    "/budget/{userId}/user": {
+      "get": {
+        "tags": [
+          "Budget"
+        ],
+        "operationId": "get-budget",
+        "summary": "View all budget by the range of month",
+        "description": "View all budget by the range of month, which you are a part of.",
+         "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          },
+          {
+            "$ref": "#/components/parameters/year"
+          },
+          {
+            "$ref": "#/components/parameters/month"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get a budget succcessfully.",
+             "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/budgets"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "default": {
+            "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+          }
+        }
+      }
+    },
+    "/budget/{budgetId}": {
+      "patch": {
+        "tags": [
+          "Budget"
+        ],
+        "operationId": "patch-budget",
+        "summary": "Update a specific budget by id.",
+        "description": "Update a specific budget by id.",
+         "parameters": [
+          {
+            "$ref": "#/components/parameters/budgetId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateBudget"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Update a budget succcessfully."
+          },
+          "404": {
+            "description": "Budget not found."
+          },
+          "default": {
+            "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Budget"
+        ],
+        "operationId": "delete-budget",
+        "summary": "Delete a specific budget by id.",
+        "description": "Delete a specific budget by id.",
+         "parameters": [
+          {
+            "$ref": "#/components/parameters/budgetId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete a budget succcessfuly."
+          },
+          "404": {
+            "description": "Budget not found."
+          },
+          "default": {
+            "description": "**HTTP Status Code - 500**. Something unexpected occurred will have some text context on what happened."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "userId": {
+        "name": "userId",
+        "description": "MongoDB ObjectId",
+        "in": "path",
+        "required": true,
+        "example": "66b023c3c49d3f879727a657",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "transactionId": {
+        "name": "transactionId",
+        "description": "MongoDB ObjectId",
+        "in": "path",
+        "required": true,
+        "example": "66b023c3c49d3f879727a657",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "fixedSeriesId": {
+        "name": "fixedSeriesId",
+        "description": "UUID",
+        "in": "path",
+        "required": true,
+        "example": "7206fffa-6383-445f-a99e-d83b4d46f54c",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "action": {
+        "name": "action",
+        "description": "delete fixed expense action",
+        "in": "query",
+        "required": false,
+        "example": "only_one",
+        "schema": {
+          "type": "string",
+          "enum": ["only_one", "following", "all"],
+          "default": "only_one"
+        }
+      },
+      "categoryId": {
+        "name": "categoryId",
+        "description": "MongoDB ObjectId",
+        "in": "path",
+        "required": true,
+        "example": "66b023c3c49d3f879727a657",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "budgetId": {
+        "name": "budgetId",
+        "description": "MongoDB ObjectId",
+        "in": "path",
+        "required": true,
+        "example": "66b023c3c49d3f879727a657",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "type": {
+        "name": "type",
+        "description": "This is a selected type.",
+        "in": "query",
+        "required": true,
+        "example": "expense",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "groupBy": {
+        "name": "groupBy",
+        "description": "This is a selected groupBy.",
+        "in": "query",
+        "required": false,
+        "example": "date",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "year": {
+        "name": "year",
+        "description": "This is a selected year.",
+        "in": "query",
+        "required": true,
+        "example": "2024",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "month": {
+        "name": "month",
+        "description": "This is a selected month.",
+        "in": "query",
+        "required": true,
+        "example": "09",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "schemas": {
+      "createTransaction": {
+        "type": "object",
+        "required": [
+          "userId",
+          "date",
+          "type",
+          "amount"
+        ],
+        "properties": {
+          "userId": {
+            "type": "string",
+            "example": "66b023c3c49d3f879727a657"
+          },
+          "date": {
+            "type": "string",
+            "example": "2024-07-01"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "income",
+              "expense"
+            ]
+          },
+          "amount": {
+            "type": "number",
+            "example": 328.25
+          },
+          "category": {
+            "type": "string"
+          },
+          "subcategory": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "fixedExpenseMonthly": {
+            "type": "boolean"
+          },
+          "endDate": {
+            "type": "string",
+            "example": "2025-06-01",
+            "description": "if fixedExpenseMonthly is true, a user can decide endDate for repeating expenses. Default value is after one year."
+          },
+          "paymentMethod": {
+            "type": "string"
+          }
+        }
+      },
+      "updateTransaction": {
+        "$ref": "#/components/schemas/createTransaction",
+        "required": [
+          "userId"
+        ]
+      },
+      "transactions": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "2024-09-01"
+          },
+          "totalAmount": {
+            "type": "number",
+            "example": 8572.25
+          },
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/transactionItems"
+            }
+          }
+        }
+      },
+      "transactionItems": {
+        "type": "object",
+        "required": [
+          "_id",
+          "userId",
+          "date",
+          "type",
+          "amount",
+          "category"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "ObjectId"
+          },
+          "userId": {
+            "type": "string",
+            "description": "ObjectId"
+          },
+          "date": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "income",
+              "expense"
+            ]
+          },
+          "amount": {
+            "type": "number"
+          },
+          "category": {
+            "type": "string"
+          },
+          "subcategory": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      },
+      "createCategory": {
+        "type": "object",
+        "required": [
+          "name",
+          "type"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "expense",
+              "income"
+            ]
+          },
+          "icon": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          }
+        }
+      },
+      "createSubCategory": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          }
+        }
+      },
+      "categories": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/category"
+        }
+      },
+      "category": {
+        "type": "object",
+        "required": [
+          "userId",
+          "name",
+          "type"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "expense",
+              "income"
+            ]
+          },
+          "icon": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          }
+        }
+      },
+      "createBudget": {
+        "type": "object",
+        "required": [
+          "userId",
+          "date",
+          "amount",
+          "category"
+        ],
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "category": {
+            "type": "string"
+          }
+        }
+      },
+      "updateBudget": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number"
+          },
+          "category": {
+            "type": "string"
+          }
+        }
+      },
+      "budgets": {
+          "type": "object",
+          "properties": {
+              "_id": {
+                  "type": "string"
+              },
+              "totalAmount": {
+                  "type": "string"
+              },
+              "bdugets": {
+                  "type": "array",
+                  "items": {
+                      "$ref": "#/components/schemas/budget"
+                  }
+              }
+          }
+      },
+      "budget":{
+        "type": "object",
+        "required": [
+          "_id",
+          "amount",
+          "category",
+          "date"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "category": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
           }
         }
       }
     }
   }
+}
