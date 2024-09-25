@@ -687,6 +687,11 @@
           "fixedExpenseMonthly": {
             "type": "boolean"
           },
+          "endDate": {
+            "type": "string",
+            "example": "2025-06-01",
+            "description": "if fixedExpenseMonthly is true, a user can decide endDate for repeating expenses. Default value is after one year."
+          },
           "paymentMethod": {
             "type": "string"
           }
