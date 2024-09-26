@@ -38,6 +38,10 @@ const transactionSchema = new Schema<ITransaction>({
   paymentMethod: {
     type: String,
   },
+  pending: {
+    type: Boolean,
+    default: false,
+  },
   fixedExpenseMonthly: {
     type: Boolean,
     default: false,

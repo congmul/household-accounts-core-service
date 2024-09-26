@@ -9,6 +9,7 @@ export interface ITransaction {
   note: string;
   type: ITransactionType;
   paymentMethod: string;
+  pending: boolean;
   fixedExpenseMonthly: boolean;
   fixedSeriesId: string;
   endDate: Date;
@@ -24,6 +25,7 @@ export interface ITransactionCreatePayload {
   subcategory?: string;
   note?: string;
   type: ITransactionType;
+  pending?: boolean;
   fixedExpenseMonthly: boolean;
   endDate?: Date;
   paymentMethod: string;
@@ -36,6 +38,7 @@ export interface ITransactionUpdatePayload {
   subcategory?: string;
   note?: string;
   type?: ITransactionType;
+  pending?: boolean;
   fixedExpenseMonthly?: boolean;
   fixedSeriesId?: string;
   endDate?: Date;
