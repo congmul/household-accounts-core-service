@@ -61,6 +61,24 @@ export const getTransactions = async (req: Request, res: Response) => {
       .send({ message: err.message, statusCode: err.statusCode });
   }
 };
+
+export const getPendingTransactions = async (req: Request, res: Response) => {
+  try {
+    const { type } = req.query;
+    if (type === "this_month") {
+      const result = await transactionService.getThisMonthPendingTransactions();
+      return res.status(200).send(result);
+    }
+
+    const result = await transactionService.getPendingTransactions();
+    res.status(200).send(result);
+  } catch (err: any) {
+    logger.error(err);
+    res
+      .status(err.statusCode)
+      .send({ message: err.message, statusCode: err.statusCode });
+  }
+};
 export const patchTransaction = async (req: Request, res: Response) => {
   try {
     const { transactionId } = req.params;

@@ -41,6 +41,12 @@ export const validGetTransaction = {
     groupBy: Joi.string().default("date"),
   }),
 };
+
+export const validGetPandingTransaction = {
+  query: Joi.object().keys({
+    type: Joi.string().valid("this_month", "all").default("this_month"),
+  }),
+};
 export const validPatchTransaction = {
   params: Joi.object().keys({
     transactionId: Joi.string().custom(validObjectId).required(),

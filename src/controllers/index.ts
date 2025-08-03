@@ -1,6 +1,7 @@
 export {
   createTransaction,
   getTransactions,
+  getPendingTransactions,
   patchTransaction,
   deleteTransaction,
   deleteFixedExpense,
