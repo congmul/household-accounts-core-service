@@ -10,10 +10,12 @@ import {
 import {
   createTransaction,
   getTransactions,
+  getPendingTransactions,
   patchTransaction,
   deleteTransaction,
   deleteFixedExpense,
 } from "../controllers";
+import { validGetPandingTransaction } from "../validate/transaction.validation";
 
 const router = express.Router();
 
@@ -21,6 +23,11 @@ const router = express.Router();
 
 router.post("/", validate(validTransaction), createTransaction);
 router.get("/:userId/user", validate(validGetTransaction), getTransactions);
+router.get(
+  "/pending",
+  validate(validGetPandingTransaction),
+  getPendingTransactions,
+);
 router.patch(
   "/:transactionId",
   validate(validPatchTransaction),

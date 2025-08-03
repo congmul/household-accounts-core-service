@@ -220,7 +220,65 @@ export const transactionService = {
       throw new AppError(ErrorMsg.getDbError("transaction").message, 500);
     }
   },
+  getPendingTransactions: async () => {
+    try {
+      const result = await Transaction.aggregate([
+        {
+          $match: {
+            pending: true,
+          },
+        },
+        {
+          $group: {
+            _id: "$userId",
+            transactions: { $push: "$$ROOT" },
+          },
+        },
+      ]);
+      return result;
+    } catch (err) {
+      logger.error(err);
+      throw new AppError(
+        ErrorMsg.getDbError("pending transactions").message,
+        500,
+      );
+    }
+  },
+  getThisMonthPendingTransactions: async () => {
+    try {
+      const startOfMonth = new Date();
+      startOfMonth.setUTCDate(1);
+      startOfMonth.setUTCHours(0, 0, 0, 0); // ex) August 1st 00:00
 
+      const endOfMonth = new Date(startOfMonth);
+      endOfMonth.setMonth(endOfMonth.getMonth() + 1); // ex) September 1st 00:00 (non-inclusive upper bound)
+
+      const result = await Transaction.aggregate([
+        {
+          $match: {
+            pending: true,
+            date: {
+              $gte: startOfMonth,
+              $lt: endOfMonth,
+            },
+          },
+        },
+        {
+          $group: {
+            _id: "$userId",
+            transactions: { $push: "$$ROOT" },
+          },
+        },
+      ]);
+      return result;
+    } catch (err) {
+      logger.error(err);
+      throw new AppError(
+        ErrorMsg.getDbError("pending transactions").message,
+        500,
+      );
+    }
+  },
   updateTransaction: async (
     transactionId: string,
     payload: ITransactionUpdatePayload,
