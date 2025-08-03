@@ -1,9 +1,10 @@
 {
   "name": "household-accounts-core-service",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prestart": "npm run build",
     "start": "node dist/app.js",
     "build": "tsc",
     "dev": "nodemon --exec ts-node src/app.ts",
