@@ -8,6 +8,7 @@ import {
   transactionRoute,
   categoryRoute,
   budgetRoute,
+  accountBookRoute,
 } from "./routes";
 
 const app = express();
@@ -22,6 +23,7 @@ app.use("/", swaggerRoute);
 app.use("/transaction", transactionRoute);
 app.use("/category", categoryRoute);
 app.use("/budget", budgetRoute);
+app.use("/account-book", accountBookRoute);
 
 app.get("/health", (req: Request, res: Response) => {
   res.send({
