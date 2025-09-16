@@ -30,9 +30,13 @@ export const categoryService = {
       throw new AppError(ErrorMsg.createDbError("category").message, 500);
     }
   },
-  getCategories: async (userId: string, type: string) => {
+  getCategories: async (
+    userId: string,
+    accountBookId: string,
+    type: string,
+  ) => {
     try {
-      const result = await Category.find({ userId, type });
+      const result = await Category.find({ userId, accountBookId, type });
       return result;
     } catch (err) {
       logger.error(err);

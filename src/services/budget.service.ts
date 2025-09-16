@@ -3,6 +3,7 @@ import logger from "../utils/logger";
 import { ErrorMsg } from "../config/msgs";
 import { IBudgetCreatePayload, IBudgetUpdatePayload } from "../types";
 import AppError from "../utils/errorHandler";
+import mongoose from "mongoose";
 
 export const budgetService = {
   createBudget: async (payload: IBudgetCreatePayload) => {
@@ -14,14 +15,21 @@ export const budgetService = {
       throw new AppError(ErrorMsg.createDbError("budget").message, 500);
     }
   },
-  getBudgets: async (userId: string, year: number, month: number) => {
+  getBudgets: async (
+    userId: string,
+    accountBookId: string,
+    year: number,
+    month: number,
+  ) => {
     try {
       const startDate = new Date(year, month - 1, 1, -7);
       const endDate = new Date(year, month, 1, -7);
+      const accountBookObjectId = new mongoose.Types.ObjectId(accountBookId);
       const result = await Budget.aggregate([
         {
           $match: {
             userId: userId,
+            accountBookId: accountBookObjectId,
             date: {
               $gte: startDate,
               $lt: endDate,

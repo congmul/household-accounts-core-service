@@ -5,6 +5,18 @@ import AppError from "../utils/errorHandler";
 import mongoose from "mongoose";
 
 export const accountbookService = {
+  checkExist: async (userId: string, accountBookId: string) => {
+    try {
+      const membership = await AccountBookMember.findOne({
+        userId,
+        accountBookId,
+      });
+      return !!membership;
+    } catch (err) {
+      logger.error(err);
+      throw new AppError(ErrorMsg.getDbError("account book").message, 500);
+    }
+  },
   getAccountbooks: async (userId: string) => {
     try {
       const result = await AccountBookMember.find({ userId: userId })
