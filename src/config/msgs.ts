@@ -34,5 +34,11 @@ export const ErrorMsg = {
     message: `Error during deleting ${name} from DB.`,
     statusCode: 500,
   }),
+  forbidden(name: string) {
+    return {
+      message: `You don't have permission to access this ${name}.`,
+      statusCode: 403,
+    };
+  },
   exceptionError: { message: "Unknown has occurred.", statusCode: 500 },
 };

@@ -1,8 +1,16 @@
 import express from "express";
-import { getAccountbooks } from "../controllers/accountbook.controller";
+import {
+  getAccountBooks,
+  createAccountBook,
+  setDefaultAccountBook,
+  deleteAccountBook,
+} from "../controllers/accountBook.controller";
 
 const router = express.Router();
 
-router.get("/:userId", getAccountbooks);
+router.get("/:userId", getAccountBooks);
+router.post("/", createAccountBook);
+router.patch("/set-default/:userId/:accountBookId", setDefaultAccountBook);
+router.delete("/:userId/:accountBookId", deleteAccountBook);
 
 export default router;
