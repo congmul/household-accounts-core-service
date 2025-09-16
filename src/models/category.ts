@@ -31,6 +31,11 @@ const categorySchema = new Schema<ICategory>({
     required: true,
     trim: true,
   },
+  accountBookId: {
+    type: Schema.Types.ObjectId,
+    ref: "AccountBook",
+    index: true,
+  },
   name: {
     type: String,
     required: true,

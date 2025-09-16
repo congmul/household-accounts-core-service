@@ -1,3 +1,5 @@
+import { Schema } from "mongoose";
+
 export interface IBasicCategory {
   name: string;
   icon: string;
@@ -7,6 +9,7 @@ export interface IBasicCategory {
 }
 export interface ICategory extends IBasicCategory {
   userId: string;
+  accountBookId: Schema.Types.ObjectId;
   subcategories: IBasicCategory[];
   type: string; // income or expense
 }
