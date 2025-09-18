@@ -7,6 +7,7 @@ const Joi = JoiBase.extend(JoiDate);
 export const validCategory = {
   body: Joi.object().keys({
     userId: Joi.string().custom(validObjectId).required(),
+    accountBookId: Joi.string().custom(validObjectId).required(),
     name: Joi.string().required(),
     type: Joi.string().valid("income", "expense", "investment").required(),
     icon: Joi.string(),
@@ -26,6 +27,7 @@ export const validSubCategory = {
 export const validGetCategory = {
   params: Joi.object().keys({
     userId: Joi.string().custom(validObjectId).required(),
+    accountBookId: Joi.string().custom(validObjectId).required(),
   }),
   query: Joi.object().keys({
     type: Joi.string().valid("expense", "income", "investment").required(),

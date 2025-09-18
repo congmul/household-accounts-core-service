@@ -1,7 +1,10 @@
+import { Schema } from "mongoose";
+
 export type ITransactionType = "income" | "expense";
 
 export interface ITransaction {
   userId: string;
+  accountBookId: Schema.Types.ObjectId;
   date: Date; // 2024-07-28T00:00:00
   amount: number;
   category: string;
@@ -19,6 +22,7 @@ export interface ITransaction {
 
 export interface ITransactionCreatePayload {
   userId: string;
+  accountBookId: Schema.Types.ObjectId;
   date: Date; // 2024-07-28T00:00:00
   amount: number;
   category?: string;

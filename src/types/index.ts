@@ -13,3 +13,4 @@ export {
 } from "./category";
 export { IBudget, IBudgetCreatePayload, IBudgetUpdatePayload } from "./budget";
 export { IAssets } from "./assets";
+export { IAccountBook, IAccountBookMember } from "./accountbook";

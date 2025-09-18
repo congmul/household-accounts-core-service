@@ -1,16 +1,31 @@
 import { Request, Response } from "express";
 import { SuccessMsg, ErrorMsg } from "../config/msgs";
-import { transactionService, userService } from "../services";
+import {
+  accountbookService,
+  transactionService,
+  userService,
+} from "../services";
 import logger from "../utils/logger";
 
 export const createTransaction = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.body;
+    const { userId, accountBookId } = req.body;
     // Check if the user exists
     const isUser = await userService.checkExist(userId);
     if (!isUser) {
       return res.status(404).send({ ...ErrorMsg.notFound("User"), userId });
     }
+    // Check if the account book exists
+    const isAccountBook = await accountbookService.checkExist(
+      userId,
+      accountBookId,
+    );
+    if (!isAccountBook) {
+      return res
+        .status(404)
+        .send({ ...ErrorMsg.notFound("Account book"), accountBookId });
+    }
+
     await transactionService.createTransaction(req.body);
     res.status(201).send(SuccessMsg.create("transcation"));
   } catch (err: any) {
@@ -20,7 +35,7 @@ export const createTransaction = async (req: Request, res: Response) => {
 };
 export const getTransactions = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
+    const { userId, accountBookId } = req.params;
     // Check if the user exists
     const isUser = await userService.checkExist(userId);
     if (!isUser) {
@@ -32,6 +47,7 @@ export const getTransactions = async (req: Request, res: Response) => {
     if (type === "expense") {
       result = await transactionService.getExpenses(
         userId,
+        accountBookId,
         parseInt(year as string),
         parseInt(month as string),
         groupBy as string,
@@ -40,6 +56,7 @@ export const getTransactions = async (req: Request, res: Response) => {
       // income
       result = await transactionService.getIncomes(
         userId,
+        accountBookId,
         parseInt(year as string),
         parseInt(month as string),
         groupBy as string,
@@ -47,6 +64,7 @@ export const getTransactions = async (req: Request, res: Response) => {
     } else if (type === "investment") {
       result = await transactionService.getInvestments(
         userId,
+        accountBookId,
         parseInt(year as string),
         parseInt(month as string),
         groupBy as string,
