@@ -27,4 +27,4 @@ export {
   createAccountBook,
   setDefaultAccountBook,
   deleteAccountBook,
-} from "./accountBook.controller";
+} from "./account-book.controller";
