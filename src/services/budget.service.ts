@@ -15,12 +15,7 @@ export const budgetService = {
       throw new AppError(ErrorMsg.createDbError("budget").message, 500);
     }
   },
-  getBudgets: async (
-    userId: string,
-    accountBookId: string,
-    year: number,
-    month: number,
-  ) => {
+  getBudgets: async (accountBookId: string, year: number, month: number) => {
     try {
       const startDate = new Date(year, month - 1, 1, -7);
       const endDate = new Date(year, month, 1, -7);
@@ -28,7 +23,6 @@ export const budgetService = {
       const result = await Budget.aggregate([
         {
           $match: {
-            userId: userId,
             accountBookId: accountBookObjectId,
             date: {
               $gte: startDate,

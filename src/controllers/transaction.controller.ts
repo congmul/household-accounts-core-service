@@ -46,7 +46,6 @@ export const getTransactions = async (req: Request, res: Response) => {
     let result: any;
     if (type === "expense") {
       result = await transactionService.getExpenses(
-        userId,
         accountBookId,
         parseInt(year as string),
         parseInt(month as string),
@@ -55,7 +54,6 @@ export const getTransactions = async (req: Request, res: Response) => {
     } else if (type === "income") {
       // income
       result = await transactionService.getIncomes(
-        userId,
         accountBookId,
         parseInt(year as string),
         parseInt(month as string),
@@ -63,7 +61,6 @@ export const getTransactions = async (req: Request, res: Response) => {
       );
     } else if (type === "investment") {
       result = await transactionService.getInvestments(
-        userId,
         accountBookId,
         parseInt(year as string),
         parseInt(month as string),
