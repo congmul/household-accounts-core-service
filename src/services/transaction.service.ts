@@ -51,7 +51,6 @@ export const transactionService = {
     }
   },
   getExpenses: async (
-    userId: string,
     accountBookId: string,
     year: number,
     month: number,
@@ -76,7 +75,6 @@ export const transactionService = {
       const result = await Transaction.aggregate([
         {
           $match: {
-            userId: userId,
             accountBookId: accountBookObjectId,
             type: { $eq: "expense" },
             date: {
@@ -105,7 +103,6 @@ export const transactionService = {
     }
   },
   getIncomes: async (
-    userId: string,
     accountBookId: string,
     year: number,
     month: number,
@@ -120,7 +117,6 @@ export const transactionService = {
         const result = await Transaction.aggregate([
           {
             $match: {
-              userId: userId,
               accountBookId: accountBookObjectId,
               type: { $eq: "income" },
               date: {
@@ -147,7 +143,6 @@ export const transactionService = {
         const result = await Transaction.aggregate([
           {
             $match: {
-              userId: userId,
               accountBookId: accountBookObjectId,
               type: { $eq: "income" },
               date: {
@@ -170,7 +165,6 @@ export const transactionService = {
     }
   },
   getInvestments: async (
-    userId: string,
     accountBookId: string,
     year: number,
     month: number,
@@ -185,7 +179,6 @@ export const transactionService = {
         const result = await Transaction.aggregate([
           {
             $match: {
-              userId: userId,
               accountBookId: accountBookObjectId,
               type: { $eq: "investment" },
               date: {
@@ -212,7 +205,6 @@ export const transactionService = {
         const result = await Transaction.aggregate([
           {
             $match: {
-              userId: userId,
               accountBookId: accountBookObjectId,
               type: { $eq: "investment" },
               date: {
