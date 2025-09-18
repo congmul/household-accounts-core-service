@@ -1,15 +1,25 @@
 import { Request, Response } from "express";
 import { SuccessMsg, ErrorMsg } from "../config/msgs";
-import { categoryService, userService } from "../services";
+import { accountbookService, categoryService, userService } from "../services";
 import logger from "../utils/logger";
 
 export const createCategory = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.body;
+    const { userId, accountBookId } = req.body;
     // Check if the user exists
     const isUser = await userService.checkExist(userId);
     if (!isUser) {
       return res.status(404).send({ ...ErrorMsg.notFound("User"), userId });
+    }
+    // Check if the account book exists
+    const isAccountBook = await accountbookService.checkExist(
+      userId,
+      accountBookId,
+    );
+    if (!isAccountBook) {
+      return res
+        .status(404)
+        .send({ ...ErrorMsg.notFound("Account book"), accountBookId });
     }
 
     await categoryService.createCategory(req.body);
@@ -42,14 +52,18 @@ export const createSubcategory = async (req: Request, res: Response) => {
 
 export const getCategories = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
+    const { userId, accountBookId } = req.params;
     // Check if the user exists
     const isUser = await userService.checkExist(userId);
     if (!isUser) {
       return res.status(404).send({ ...ErrorMsg.notFound("User"), userId });
     }
     const { type } = req.query;
-    const result = await categoryService.getCategories(userId, type as string);
+    const result = await categoryService.getCategories(
+      userId,
+      accountBookId,
+      type as string,
+    );
 
     res.status(200).send(result);
   } catch (err: any) {

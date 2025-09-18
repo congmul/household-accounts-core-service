@@ -7,6 +7,7 @@ const Joi = JoiBase.extend(JoiDate);
 export const validTransaction = {
   body: Joi.object().keys({
     userId: Joi.string().custom(validObjectId).required(),
+    accountBookId: Joi.string().custom(validObjectId).required(),
     date: Joi.date().format("YYYY-MM-DD").required(),
     type: Joi.string().valid("income", "expense", "investment").required(),
     amount: Joi.number().required(),
@@ -23,6 +24,7 @@ export const validTransaction = {
 export const validGetTransaction = {
   params: Joi.object().keys({
     userId: Joi.string().custom(validObjectId).required(),
+    accountBookId: Joi.string().custom(validObjectId).required(),
   }),
   query: Joi.object().keys({
     type: Joi.string().valid("income", "expense", "investment").required(),

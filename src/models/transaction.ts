@@ -7,6 +7,11 @@ const transactionSchema = new Schema<ITransaction>({
     required: true,
     trim: true,
   },
+  accountBookId: {
+    type: Schema.Types.ObjectId,
+    ref: "AccountBook",
+    index: true,
+  },
   date: {
     type: Date,
     required: true,

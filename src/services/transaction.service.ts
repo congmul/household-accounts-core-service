@@ -5,6 +5,7 @@ import { ITransactionCreatePayload, ITransactionUpdatePayload } from "../types";
 import AppError from "../utils/errorHandler";
 import { addMonths } from "../utils/helper";
 import { v4 as uuidv4 } from "uuid";
+import mongoose from "mongoose";
 
 export const transactionService = {
   createTransaction: async (payload: ITransactionCreatePayload) => {
@@ -51,6 +52,7 @@ export const transactionService = {
   },
   getExpenses: async (
     userId: string,
+    accountBookId: string,
     year: number,
     month: number,
     groupBy: string,
@@ -68,10 +70,14 @@ export const transactionService = {
             ? { $dateToString: { format: "%Y-%m-%d", date: "$date" } }
             : "$category";
       }
+
+      const accountBookObjectId = new mongoose.Types.ObjectId(accountBookId);
+
       const result = await Transaction.aggregate([
         {
           $match: {
             userId: userId,
+            accountBookId: accountBookObjectId,
             type: { $eq: "expense" },
             date: {
               $gte: startDate,
@@ -100,6 +106,7 @@ export const transactionService = {
   },
   getIncomes: async (
     userId: string,
+    accountBookId: string,
     year: number,
     month: number,
     groupBy: string,
@@ -108,11 +115,13 @@ export const transactionService = {
       logger.info("getIncomes");
       const startDate = new Date(year, month - 1, 1);
       const endDate = new Date(year, month, 1);
+      const accountBookObjectId = new mongoose.Types.ObjectId(accountBookId);
       if (groupBy && groupBy === "date") {
         const result = await Transaction.aggregate([
           {
             $match: {
               userId: userId,
+              accountBookId: accountBookObjectId,
               type: { $eq: "income" },
               date: {
                 $gte: startDate,
@@ -139,6 +148,7 @@ export const transactionService = {
           {
             $match: {
               userId: userId,
+              accountBookId: accountBookObjectId,
               type: { $eq: "income" },
               date: {
                 $gte: startDate,
@@ -161,6 +171,7 @@ export const transactionService = {
   },
   getInvestments: async (
     userId: string,
+    accountBookId: string,
     year: number,
     month: number,
     groupBy: string,
@@ -169,11 +180,13 @@ export const transactionService = {
       logger.info("getInvestments");
       const startDate = new Date(year, month - 1, 1);
       const endDate = new Date(year, month, 1);
+      const accountBookObjectId = new mongoose.Types.ObjectId(accountBookId);
       if (groupBy && groupBy === "date") {
         const result = await Transaction.aggregate([
           {
             $match: {
               userId: userId,
+              accountBookId: accountBookObjectId,
               type: { $eq: "investment" },
               date: {
                 $gte: startDate,
@@ -200,6 +213,7 @@ export const transactionService = {
           {
             $match: {
               userId: userId,
+              accountBookId: accountBookObjectId,
               type: { $eq: "investment" },
               date: {
                 $gte: startDate,

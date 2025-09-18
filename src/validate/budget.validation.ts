@@ -7,6 +7,7 @@ const Joi = JoiBase.extend(JoiDate);
 export const validBudget = {
   body: Joi.object().keys({
     userId: Joi.string().custom(validObjectId).required(),
+    accountBookId: Joi.string().custom(validObjectId).required(),
     date: Joi.date().format("YYYY-MM-DD").required(),
     amount: Joi.number().required(),
     category: Joi.string().required(),
@@ -16,6 +17,7 @@ export const validBudget = {
 export const validGetBudget = {
   params: Joi.object().keys({
     userId: Joi.string().custom(validObjectId).required(),
+    accountBookId: Joi.string().custom(validObjectId).required(),
   }),
   query: Joi.object().keys({
     year: Joi.string()

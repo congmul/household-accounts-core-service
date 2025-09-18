@@ -22,7 +22,11 @@ const router = express.Router();
 // TODO: need to add middleware for authorization by access token. Only creator can delete it.
 
 router.post("/", validate(validTransaction), createTransaction);
-router.get("/:userId/user", validate(validGetTransaction), getTransactions);
+router.get(
+  "/:userId/:accountBookId/user",
+  validate(validGetTransaction),
+  getTransactions,
+);
 router.get(
   "/pending",
   validate(validGetPandingTransaction),

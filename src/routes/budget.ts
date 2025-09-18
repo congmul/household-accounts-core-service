@@ -17,7 +17,11 @@ const router = express.Router();
 
 // TODO: need to add middleware for authorization by access token. Only creator can delete it.
 router.post("/", validate(validBudget), createBudget);
-router.get("/:userId/user", validate(validGetBudget), getBudgets);
+router.get(
+  "/:userId/:accountBookId/user",
+  validate(validGetBudget),
+  getBudgets,
+);
 router.patch("/:budgetId", validate(validUpdateBudget), updateBudget);
 router.delete("/:budgetId", validate(validDeleteBudget), deleteBudget);
 
