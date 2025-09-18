@@ -4,7 +4,7 @@ import {
   createAccountBook,
   setDefaultAccountBook,
   deleteAccountBook,
-} from "../controllers/accountBook.controller";
+} from "../controllers";
 
 const router = express.Router();
 
