@@ -299,8 +299,11 @@ export const transactionService = {
   ) => {
     try {
       const result = await Transaction.findByIdAndUpdate(
-        { _id: transactionId },
-        { ...payload },
+        transactionId,
+        payload.subcategory
+          ? { $set: payload }
+          : { $set: payload, $unset: { subcategory: "" } },
+        { new: true },
       );
       return result;
     } catch (err) {
