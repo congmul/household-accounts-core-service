@@ -6,7 +6,7 @@ import {
   deleteAccountBook,
   beginningMonthCheck,
   updateBeginningMonthCheck,
-} from "../controllers/accountbook.controller";
+} from "../controllers/account-book.controller";
 
 const router = express.Router();
 
