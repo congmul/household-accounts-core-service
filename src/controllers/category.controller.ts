@@ -60,7 +60,6 @@ export const getCategories = async (req: Request, res: Response) => {
     }
     const { type } = req.query;
     const result = await categoryService.getCategories(
-      userId,
       accountBookId,
       type as string,
     );

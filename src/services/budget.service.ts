@@ -100,7 +100,6 @@ export const budgetService = {
       const result = await Budget.aggregate([
         {
           $match: {
-            userId: userId,
             accountBookId: accountBookObjectId,
             date: {
               $gte: startDate,

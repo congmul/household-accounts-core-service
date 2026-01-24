@@ -72,7 +72,6 @@ export const getBudgets = async (req: Request, res: Response) => {
 
     const { year, month } = req.query;
     const result = await budgetService.getBudgets(
-      userId,
       accountBookId,
       parseInt(year as string),
       parseInt(month as string),

@@ -22,3 +22,10 @@ export {
   updateBudget,
   deleteBudget,
 } from "./budget.controller";
+
+export {
+  getAccountBooks,
+  createAccountBook,
+  setDefaultAccountBook,
+  deleteAccountBook,
+} from "./account-book.controller";
