@@ -83,3 +83,39 @@ export const deleteAccountBook = async (req: Request, res: Response) => {
     return res.status(500).send(err);
   }
 };
+
+export const beginningMonthCheck = async (req: Request, res: Response) => {
+  try {
+    const { accountBookId } = req.params;
+    const result = await accountbookService.beginningMonthCheck(accountBookId);
+    res.status(200).send(result);
+  } catch (err: any) {
+    logger.error(err);
+    if (err.statusCode && err.statusCode !== 500) {
+      return res.status(err.statusCode).send({ message: err.message });
+    }
+    return res.status(500).send(err);
+  }
+};
+
+export const updateBeginningMonthCheck = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const { accountBookId } = req.params;
+    const { date, checkList } = req.body;
+    const result = await accountbookService.updateBeginningMonthCheck(
+      accountBookId,
+      date,
+      checkList,
+    );
+    res.status(200).send(result);
+  } catch (err: any) {
+    logger.error(err);
+    if (err.statusCode && err.statusCode !== 500) {
+      return res.status(err.statusCode).send({ message: err.message });
+    }
+    return res.status(500).send(err);
+  }
+};
