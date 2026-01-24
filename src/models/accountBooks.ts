@@ -12,6 +12,9 @@ const accountBookSchema = new Schema<IAccountBook>(
       type: String,
       trim: true,
     },
+    beginningMonthCheck: {
+      type: Object,
+    },
   },
   { timestamps: true },
 );

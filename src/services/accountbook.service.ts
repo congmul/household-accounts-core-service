@@ -5,6 +5,105 @@ import AppError from "../utils/errorHandler";
 import mongoose from "mongoose";
 
 export const accountbookService = {
+  beginningMonthCheck: async (accountBookId: string) => {
+    try {
+      const currentDate = new Date();
+
+      // Format ex) 2026-01-01 (year-month-day only, no time)
+      const firstOfMonth = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        1,
+      );
+      const todayYearMonth = firstOfMonth.toISOString().slice(0, 10); // 'YYYY-MM-DD'
+
+      const accountBook = await AccountBook.findOne({
+        _id: accountBookId,
+      });
+
+      if (!accountBook) {
+        throw new AppError(ErrorMsg.notFound("AccountBook").message, 404);
+      }
+      /**
+       * Check if beginningMonthCheck property exists
+       * If not, create it with the current date
+       */
+      let beginningMonthCheck = {};
+      if (
+        !accountBook.beginningMonthCheck ||
+        !accountBook.beginningMonthCheck[todayYearMonth]
+      ) {
+        accountBook.beginningMonthCheck = {
+          ...accountBook.beginningMonthCheck,
+          [todayYearMonth]: {
+            isCopiedBudget: false,
+          },
+        };
+        beginningMonthCheck = {
+          isCopiedBudget: false,
+        };
+        await accountBook.save();
+      } else {
+        beginningMonthCheck = accountBook.beginningMonthCheck[todayYearMonth];
+      }
+
+      return beginningMonthCheck;
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  updateBeginningMonthCheck: async (
+    accountBookId: string,
+    checkList: Record<string, boolean>,
+  ) => {
+    try {
+      const accountBook = await AccountBook.findOne({
+        _id: accountBookId,
+      });
+
+      if (!accountBook) {
+        throw new AppError(ErrorMsg.notFound("AccountBook").message, 404);
+      }
+      // Update the specific date's properties by merging existing and incoming values
+      // Format ex) 2026-01-01 (year-month-day only, no time)
+      const currentDate = new Date();
+      const firstOfMonth = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        1,
+      );
+      const todayYearMonth = firstOfMonth.toISOString().slice(0, 10); // 'YYYY-MM-DD'
+
+      if (
+        accountBook.beginningMonthCheck &&
+        accountBook.beginningMonthCheck[todayYearMonth]
+      ) {
+        const updated = await AccountBook.findByIdAndUpdate(
+          accountBookId,
+          {
+            $set: {
+              [`beginningMonthCheck.${todayYearMonth}.isCopiedBudget`]:
+                checkList.isCopiedBudget,
+            },
+          },
+          { new: true, runValidators: true },
+        );
+
+        return "ok";
+      } else {
+        throw new AppError(
+          ErrorMsg.notFound(
+            `BeginningMonthCheck: date-(${todayYearMonth})`,
+          ).message,
+          404,
+        );
+      }
+    } catch (err) {
+      throw err;
+    }
+  },
+
   checkExist: async (userId: string, accountBookId: string) => {
     try {
       const membership = await AccountBookMember.findOne({
