@@ -31,6 +31,36 @@ export const createBudget = async (req: Request, res: Response) => {
     res.status(500).send(err);
   }
 };
+
+export const createAllPreMonthBudget = async (req: Request, res: Response) => {
+  try {
+    const { userId, accountBookId } = req.body;
+    // Check if the user exists
+    const isUser = await userService.checkExist(userId);
+    if (!isUser) {
+      return res.status(404).send({ ...ErrorMsg.notFound("User"), userId });
+    }
+
+    // Check if the account book exists
+    const isAccountBook = await accountbookService.checkExist(
+      userId,
+      accountBookId,
+    );
+    if (!isAccountBook) {
+      return res
+        .status(404)
+        .send({ ...ErrorMsg.notFound("Account book"), accountBookId });
+    }
+
+    await budgetService.createAllPreMonthBudget(req.body);
+
+    res.status(201).send(SuccessMsg.create("All previous month budgets"));
+  } catch (err: any) {
+    logger.error(err);
+    res.status(500).send(err);
+  }
+};
+
 export const getBudgets = async (req: Request, res: Response) => {
   try {
     const { userId, accountBookId } = req.params;

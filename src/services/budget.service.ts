@@ -15,10 +15,87 @@ export const budgetService = {
       throw new AppError(ErrorMsg.createDbError("budget").message, 500);
     }
   },
-  getBudgets: async (accountBookId: string, year: number, month: number) => {
+  createAllPreMonthBudget: async (payload: {
+    userId: string;
+    accountBookId: string;
+  }) => {
     try {
-      const startDate = new Date(year, month - 1, 1, -7);
-      const endDate = new Date(year, month, 1, -7);
+      // Grab previous month budgets
+      const previousMonth = new Date();
+      previousMonth.setMonth(previousMonth.getMonth() - 1);
+      const startDate = new Date(
+        Date.UTC(
+          previousMonth.getFullYear(),
+          previousMonth.getMonth(),
+          1,
+          0,
+          0,
+          0,
+          0,
+        ),
+      );
+      const endDate = new Date(
+        Date.UTC(
+          previousMonth.getFullYear(),
+          previousMonth.getMonth() + 1,
+          1,
+          0,
+          0,
+          0,
+          0,
+        ),
+      );
+      const budgets = await Budget.find({
+        userId: payload.userId,
+        accountBookId: payload.accountBookId,
+        date: {
+          $gte: startDate,
+          $lt: endDate,
+        },
+      });
+      // Determine which categories already have a budget for the target date
+      const existingForTarget = await Budget.find({
+        userId: payload.userId,
+        accountBookId: payload.accountBookId,
+        date: endDate,
+      }).select("category");
+
+      const existingCategories = new Set(
+        existingForTarget.map((b: any) => String(b.category)),
+      );
+
+      // Only create budgets for categories that don't already exist on the target date
+      const tempBudgets = budgets
+        .filter((budget) => {
+          const cat = String((budget as any).category);
+          return !existingCategories.has(cat);
+        })
+        .map((budget) => ({
+          userId: budget.userId,
+          accountBookId: budget.accountBookId,
+          date: endDate,
+          amount: budget.amount,
+          category: budget.category,
+        }));
+
+      const result =
+        tempBudgets.length > 0 ? await Budget.create(tempBudgets) : [];
+      return result;
+    } catch (err) {
+      logger.error(err);
+      throw new AppError(ErrorMsg.createDbError("budget").message, 500);
+    }
+  },
+  getBudgets: async (
+    userId: string,
+    accountBookId: string,
+    year: number,
+    month: number,
+  ) => {
+    try {
+      // Use UTC constructors so start/end are at 00:00:00.000Z for the given month
+      const startDate = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0, 0));
+      const endDate = new Date(Date.UTC(year, month, 1, 0, 0, 0, 0));
       const accountBookObjectId = new mongoose.Types.ObjectId(accountBookId);
       const result = await Budget.aggregate([
         {
