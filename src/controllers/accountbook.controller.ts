@@ -104,13 +104,12 @@ export const updateBeginningMonthCheck = async (
 ) => {
   try {
     const { accountBookId } = req.params;
-    const { date, checkList } = req.body;
-    const result = await accountbookService.updateBeginningMonthCheck(
+    const { checkList } = req.body;
+    await accountbookService.updateBeginningMonthCheck(
       accountBookId,
-      date,
       checkList,
     );
-    res.status(200).send(result);
+    res.status(204).send();
   } catch (err: any) {
     logger.error(err);
     if (err.statusCode && err.statusCode !== 500) {

@@ -28,6 +28,7 @@ export const accountbookService = {
        * Check if beginningMonthCheck property exists
        * If not, create it with the current date
        */
+      let beginningMonthCheck = {};
       if (
         !accountBook.beginningMonthCheck ||
         !accountBook.beginningMonthCheck[todayYearMonth]
@@ -38,10 +39,15 @@ export const accountbookService = {
             isCopiedBudget: false,
           },
         };
+        beginningMonthCheck = {
+          isCopiedBudget: false,
+        };
         await accountBook.save();
+      } else {
+        beginningMonthCheck = accountBook.beginningMonthCheck[todayYearMonth];
       }
 
-      return accountBook;
+      return beginningMonthCheck;
     } catch (err) {
       throw err;
     }
@@ -49,7 +55,6 @@ export const accountbookService = {
 
   updateBeginningMonthCheck: async (
     accountBookId: string,
-    date: string,
     checkList: Record<string, boolean>,
   ) => {
     try {
@@ -61,25 +66,36 @@ export const accountbookService = {
         throw new AppError(ErrorMsg.notFound("AccountBook").message, 404);
       }
       // Update the specific date's properties by merging existing and incoming values
+      // Format ex) 2026-01-01 (year-month-day only, no time)
+      const currentDate = new Date();
+      const firstOfMonth = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        1,
+      );
+      const todayYearMonth = firstOfMonth.toISOString().slice(0, 10); // 'YYYY-MM-DD'
+
       if (
         accountBook.beginningMonthCheck &&
-        accountBook.beginningMonthCheck[date]
+        accountBook.beginningMonthCheck[todayYearMonth]
       ) {
         const updated = await AccountBook.findByIdAndUpdate(
           accountBookId,
           {
             $set: {
-              [`beginningMonthCheck.${date}.isCopiedBudget`]:
+              [`beginningMonthCheck.${todayYearMonth}.isCopiedBudget`]:
                 checkList.isCopiedBudget,
             },
           },
           { new: true, runValidators: true },
         );
 
-        return updated;
+        return "ok";
       } else {
         throw new AppError(
-          ErrorMsg.notFound(`BeginningMonthCheck: date-(${date})`).message,
+          ErrorMsg.notFound(
+            `BeginningMonthCheck: date-(${todayYearMonth})`,
+          ).message,
           404,
         );
       }
