@@ -59,8 +59,9 @@ export const transactionService = {
   ) => {
     try {
       logger.info("getExpenses");
-      const startDate = new Date(year, month - 1, 1, -7);
-      const endDate = new Date(year, month, 1, -7);
+      // Use UTC constructors so start/end are at 00:00:00.000Z for the given month
+      const startDate = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0, 0));
+      const endDate = new Date(Date.UTC(year, month, 1, 0, 0, 0, 0));
       let group: any;
       if (groupBy == "undefined") {
         group = { $dateToString: { format: "%Y-%m-%d", date: "$date" } };

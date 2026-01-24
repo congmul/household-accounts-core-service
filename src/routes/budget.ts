@@ -2,12 +2,14 @@ import express from "express";
 import {
   validate,
   validBudget,
+  validCreateAllPreMonthBudget,
   validGetBudget,
   validUpdateBudget,
   validDeleteBudget,
 } from "../validate";
 import {
   createBudget,
+  createAllPreMonthBudget,
   getBudgets,
   updateBudget,
   deleteBudget,
@@ -17,6 +19,11 @@ const router = express.Router();
 
 // TODO: need to add middleware for authorization by access token. Only creator can delete it.
 router.post("/", validate(validBudget), createBudget);
+router.post(
+  "/copy-all-pre-month",
+  validate(validCreateAllPreMonthBudget),
+  createAllPreMonthBudget,
+);
 router.get(
   "/:userId/:accountBookId/user",
   validate(validGetBudget),

@@ -14,6 +14,13 @@ export const validBudget = {
   }),
 };
 
+export const validCreateAllPreMonthBudget = {
+  body: Joi.object().keys({
+    userId: Joi.string().custom(validObjectId).required(),
+    accountBookId: Joi.string().custom(validObjectId).required(),
+  }),
+};
+
 export const validGetBudget = {
   params: Joi.object().keys({
     userId: Joi.string().custom(validObjectId).required(),
